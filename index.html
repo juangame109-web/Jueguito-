@@ -2,6 +2,7 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8">
+
 <meta name="viewport"
       content="width=device-width,
                initial-scale=1.0,
@@ -33,11 +34,14 @@ html,body{
     width:100vw;
     height:100vh;
     overflow:hidden;
+
     background:
-        radial-gradient(circle at 50% 20%,
-        #191950 0%,
-        #08081d 45%,
-        #020208 100%);
+        radial-gradient(
+            circle at 50% 20%,
+            #191950 0%,
+            #08081d 45%,
+            #020208 100%
+        );
 }
 
 canvas{
@@ -54,11 +58,14 @@ canvas{
     left:0;
     width:100%;
     padding:0 15px;
+
     display:flex;
     justify-content:space-between;
+
     color:white;
     font-size:17px;
     font-weight:bold;
+
     z-index:10;
     pointer-events:none;
 }
@@ -67,16 +74,20 @@ canvas{
     position:absolute;
     top:45px;
     right:12px;
+
     z-index:20;
 
     border:0;
     border-radius:10px;
+
     padding:8px 13px;
 
     color:white;
     background:#ffffff22;
 
     font-weight:bold;
+
+    touch-action:manipulation;
 }
 
 #love{
@@ -88,6 +99,7 @@ canvas{
     transform:translate(-50%,-50%) scale(.5);
 
     width:95%;
+
     text-align:center;
 
     color:#ff4f86;
@@ -137,7 +149,6 @@ canvas{
 }
 
 #controls{
-
     position:absolute;
 
     bottom:15px;
@@ -164,7 +175,6 @@ canvas{
 }
 
 .ctrl{
-
     width:70px;
     height:60px;
 
@@ -177,14 +187,14 @@ canvas{
     color:white;
 
     font-size:28px;
-
     font-weight:bold;
 
     touch-action:none;
 
     user-select:none;
-
     -webkit-user-select:none;
+
+    -webkit-touch-callout:none;
 }
 
 .ctrl:active{
@@ -193,8 +203,7 @@ canvas{
 }
 
 #fire{
-
-    width:100px;
+    width:110px;
 
     background:#ff477b;
 
@@ -203,12 +212,20 @@ canvas{
     box-shadow:
         0 0 15px #ff477b88;
 
+    pointer-events:auto;
+}
+
+#fire:active{
+    transform:scale(.92);
+
+    background:#ff174f;
+
+    box-shadow:
+        0 0 25px #ff477b;
 }
 
 #menu{
-
     position:absolute;
-
     inset:0;
 
     z-index:50;
@@ -216,9 +233,7 @@ canvas{
     display:flex;
 
     flex-direction:column;
-
     justify-content:center;
-
     align-items:center;
 
     text-align:center;
@@ -228,11 +243,9 @@ canvas{
     color:white;
 
     background:#03030ddd;
-
 }
 
 #menu h1{
-
     margin:0 0 10px;
 
     font-size:clamp(32px,10vw,60px);
@@ -242,21 +255,17 @@ canvas{
     text-shadow:
         0 0 15px #ff1760,
         0 0 30px #ff1760;
-
 }
 
 #menu p{
-
     max-width:600px;
 
     line-height:1.5;
 
     color:#ddd;
-
 }
 
 #start{
-
     border:0;
 
     border-radius:15px;
@@ -273,18 +282,17 @@ canvas{
 
     font-weight:bold;
 
+    touch-action:manipulation;
 }
 
 </style>
 </head>
-
 
 <body>
 
 <div id="game">
 
 <canvas id="canvas"></canvas>
-
 
 <div id="top">
 
@@ -300,11 +308,9 @@ Puntos:
 
 </div>
 
-
 <button id="pause">
 Pausa
 </button>
-
 
 <div id="love">
 
@@ -322,18 +328,19 @@ MIL BESOS 😘😘😘
 
 </div>
 
-
 <div id="controls">
 
 <div class="controlGroup">
 
 <button
+    type="button"
     class="ctrl"
     id="left">
 ◀
 </button>
 
 <button
+    type="button"
     class="ctrl"
     id="right">
 ▶
@@ -341,17 +348,14 @@ MIL BESOS 😘😘😘
 
 </div>
 
-
 <button
+    type="button"
     class="ctrl"
     id="fire">
-
 DISPARAR
-
 </button>
 
 </div>
-
 
 <div id="menu">
 
@@ -369,25 +373,21 @@ Cada vez que destruyas uno aparecerá:
 
 <br>
 
-<b>
-TE AMO ❤️❤️
-</b>
+<b>TE AMO ❤️❤️</b>
 
 <br>
 
-<b>
-ERES LA MEJOR 💖
-</b>
+<b>ERES LA MEJOR 💖</b>
 
 <br>
 
-<b>
-MIL BESOS 😘😘😘
-</b>
+<b>MIL BESOS 😘😘😘</b>
 
 </p>
 
-<button id="start">
+<button
+    type="button"
+    id="start">
 🚀 JUGAR
 </button>
 
@@ -399,125 +399,109 @@ MIL BESOS 😘😘😘
 <script>
 
 /* =====================================================
-   👾 IMÁGENES DE LOS ALIENS
-   =====================================================
-
-   PON AQUÍ LOS LINKS DIRECTOS DE TUS IMÁGENES.
-
-   Puedes poner una o varias.
-
-   IMPORTANTE:
-   Deben ser links directos a imágenes.
-
-   Ejemplo:
-
-   const ALIEN_IMAGES = [
-       "https://tusitio.com/alien1.png",
-       "https://tusitio.com/alien2.png"
-   ];
-
+   IMÁGENES DE LOS ALIENS
    ===================================================== */
-
 
 const ALIEN_IMAGES = [
 
-    // Pega aquí tus imágenes:
+    /*
+    Ejemplo:
 
-    // "https://tusitio.com/imagen1.png",
+    "https://tusitio.com/alien1.png",
+    "https://tusitio.com/alien2.png"
 
-    // "https://tusitio.com/imagen2.png",
+    */
 
 ];
 
+
+/* =====================================================
+   ELEMENTOS
+   ===================================================== */
+
+const canvas =
+    document.getElementById("canvas");
+
+const ctx =
+    canvas.getContext("2d");
+
+const scoreElement =
+    document.getElementById("score");
+
+const livesElement =
+    document.getElementById("lives");
+
+const loveElement =
+    document.getElementById("love");
+
+const menu =
+    document.getElementById("menu");
+
+const startButton =
+    document.getElementById("start");
+
+const pauseButton =
+    document.getElementById("pause");
+
+const leftButton =
+    document.getElementById("left");
+
+const rightButton =
+    document.getElementById("right");
+
+const fireButton =
+    document.getElementById("fire");
 
 
 /* =====================================================
    VARIABLES
    ===================================================== */
 
-const canvas =
-document.getElementById("canvas");
+let W = 0;
+let H = 0;
 
-const ctx =
-canvas.getContext("2d");
+let playing = false;
+let paused = false;
 
+let score = 0;
+let lives = 3;
 
-const scoreElement =
-document.getElementById("score");
+let lastTime = 0;
 
-const livesElement =
-document.getElementById("lives");
+let player = null;
 
-const loveElement =
-document.getElementById("love");
+let bullets = [];
+let aliens = [];
+let particles = [];
+let stars = [];
 
+let alienImages = [];
 
-const menu =
-document.getElementById("menu");
+let movingLeft = false;
+let movingRight = false;
 
-const startButton =
-document.getElementById("start");
-
-const pauseButton =
-document.getElementById("pause");
-
-
-const leftButton =
-document.getElementById("left");
-
-const rightButton =
-document.getElementById("right");
-
-const fireButton =
-document.getElementById("fire");
-
-
-
-let W;
-let H;
-
-let playing=false;
-
-let paused=false;
-
-let score=0;
-
-let lives=3;
-
-let lastTime=0;
-
-
-let player;
-
-let bullets=[];
-
-let aliens=[];
-
-let particles=[];
-
-let stars=[];
-
-
-let alienImages=[];
-
+let levelStarting = false;
 
 
 /* =====================================================
-   TAMAÑO DEL CANVAS
+   CANVAS
    ===================================================== */
 
 function resizeCanvas(){
 
-    W=window.innerWidth;
+    W = window.innerWidth;
+    H = window.innerHeight;
 
-    H=window.innerHeight;
+    canvas.width = W;
+    canvas.height = H;
 
-    canvas.width=W;
+    if(player){
 
-    canvas.height=H;
+        player.y = H - 110;
+
+    }
 
 }
-
 
 resizeCanvas();
 
@@ -527,24 +511,25 @@ window.addEventListener(
 );
 
 
-
 /* =====================================================
    CARGAR IMÁGENES
    ===================================================== */
 
 function loadAlienImages(){
 
-    alienImages=[];
+    alienImages = [];
 
-    for(
-        let i=0;
-        i<ALIEN_IMAGES.length;
-        i++
-    ){
+    for(let i = 0; i < ALIEN_IMAGES.length; i++){
 
-        let image=new Image();
+        const image = new Image();
 
-        image.src=ALIEN_IMAGES[i];
+        image.onload = function(){
+
+            draw();
+
+        };
+
+        image.src = ALIEN_IMAGES[i];
 
         alienImages.push(image);
 
@@ -553,30 +538,25 @@ function loadAlienImages(){
 }
 
 
-
 /* =====================================================
    ESTRELLAS
    ===================================================== */
 
 function createStars(){
 
-    stars=[];
+    stars = [];
 
-    for(
-        let i=0;
-        i<100;
-        i++
-    ){
+    for(let i = 0; i < 120; i++){
 
         stars.push({
 
-            x:Math.random()*W,
+            x: Math.random() * W,
 
-            y:Math.random()*H,
+            y: Math.random() * H,
 
-            size:Math.random()*2+0.5,
+            size: Math.random() * 2 + .5,
 
-            speed:Math.random()*30+10
+            speed: Math.random() * 30 + 10
 
         });
 
@@ -584,9 +564,74 @@ function createStars(){
 
 }
 
-
 createStars();
 
+
+/* =====================================================
+   CREAR ALIENS
+   ===================================================== */
+
+function createAliens(){
+
+    aliens = [];
+
+    const columns =
+        Math.max(
+            5,
+            Math.min(
+                9,
+                Math.floor(W / 65)
+            )
+        );
+
+    const rows = 3;
+
+    const spacing =
+        Math.min(
+            70,
+            (W - 60) / columns
+        );
+
+    const startX =
+        W / 2 -
+        spacing * (columns - 1) / 2;
+
+
+    for(let row = 0; row < rows; row++){
+
+        for(let column = 0; column < columns; column++){
+
+            aliens.push({
+
+                x:
+                    startX +
+                    column * spacing,
+
+                y:
+                    110 +
+                    row * 55,
+
+                width:44,
+
+                height:38,
+
+                direction:1,
+
+                imageIndex:
+                    ALIEN_IMAGES.length > 0
+                    ?
+                    (row * columns + column) %
+                    ALIEN_IMAGES.length
+                    :
+                    0
+
+            });
+
+        }
+
+    }
+
+}
 
 
 /* =====================================================
@@ -597,116 +642,46 @@ function startGame(){
 
     loadAlienImages();
 
-    score=0;
+    score = 0;
+    lives = 3;
 
-    lives=3;
+    scoreElement.textContent = score;
+    livesElement.textContent = lives;
 
-    scoreElement.textContent=score;
+    player = {
 
-    livesElement.textContent=lives;
+        x: W / 2,
 
+        y: H - 110,
 
-    player={
+        width: 50,
 
-        x:W/2,
+        height: 35,
 
-        y:H-110,
+        speed: 380,
 
-        width:50,
-
-        height:35,
-
-        speed:350,
-
-        cooldown:0
+        cooldown: 0
 
     };
 
+    bullets = [];
+    particles = [];
 
-    bullets=[];
+    movingLeft = false;
+    movingRight = false;
 
-    aliens=[];
+    levelStarting = false;
 
-    particles=[];
+    createAliens();
 
+    playing = true;
+    paused = false;
 
-    let columns=
-        Math.max(
-            5,
-            Math.min(
-                9,
-                Math.floor(W/65)
-            )
-        );
+    pauseButton.textContent = "Pausa";
 
-
-    let rows=3;
-
-
-    let spacing=
-        Math.min(
-            70,
-            (W-60)/columns
-        );
-
-
-    let startX=
-        W/2 -
-        spacing*(columns-1)/2;
-
-
-    for(
-        let row=0;
-        row<rows;
-        row++
-    ){
-
-        for(
-            let column=0;
-            column<columns;
-            column++
-        ){
-
-            aliens.push({
-
-                x:
-                    startX+
-                    column*spacing,
-
-                y:
-                    110+
-                    row*55,
-
-                width:44,
-
-                height:38,
-
-                direction:1,
-
-                imageIndex:
-                    (row*columns+column)%
-                    Math.max(
-                        1,
-                        ALIEN_IMAGES.length
-                    )
-
-            });
-
-        }
-
-    }
-
-
-    playing=true;
-
-    paused=false;
-
-    pauseButton.textContent="Pausa";
-
-    menu.style.display="none";
+    menu.style.display = "none";
 
 }
-
 
 
 /* =====================================================
@@ -716,44 +691,40 @@ function startGame(){
 function shoot(){
 
     if(!playing){
-
         return;
-
     }
 
     if(paused){
-
         return;
-
     }
 
-
-    if(player.cooldown>0){
-
+    if(!player){
         return;
+    }
 
+    if(player.cooldown > 0){
+        return;
     }
 
 
     bullets.push({
 
-        x:player.x,
+        x: player.x,
 
-        y:player.y-25,
+        y: player.y - 30,
 
-        width:5,
+        width: 6,
 
-        height:18,
+        height: 20,
 
-        speed:650
+        speed: 720
 
     });
 
 
-    player.cooldown=.25;
+    player.cooldown = .18;
 
 }
-
 
 
 /* =====================================================
@@ -761,38 +732,25 @@ function shoot(){
    ===================================================== */
 
 /*
+   IMPORTANTE:
 
-   AQUÍ ESTÁ LA PARTE IMPORTANTE.
+   Usamos POINTER EVENTS.
 
-   Se utilizan touchstart Y click.
+   Esto funciona para:
 
-   Así funciona tanto en Android
-   como en navegador de computadora.
-
+   - Android
+   - iPhone
+   - Tablet
+   - Mouse
+   - PC
+   - Pantallas táctiles
 */
 
-
 fireButton.addEventListener(
-    "touchstart",
+    "pointerdown",
     function(event){
 
         event.preventDefault();
-
-        event.stopPropagation();
-
-        shoot();
-
-    },
-    {passive:false}
-);
-
-
-fireButton.addEventListener(
-    "click",
-    function(event){
-
-        event.preventDefault();
-
         event.stopPropagation();
 
         shoot();
@@ -801,97 +759,123 @@ fireButton.addEventListener(
 );
 
 
+/*
+   Evita que el navegador genere
+   comportamientos adicionales.
+*/
+
+fireButton.addEventListener(
+    "click",
+    function(event){
+
+        event.preventDefault();
+
+    }
+);
+
 
 /* =====================================================
-   BOTONES IZQUIERDA / DERECHA
+   CONTROLES IZQUIERDA
    ===================================================== */
 
-let movingLeft=false;
-
-let movingRight=false;
-
-
-
-function pressLeft(event){
+function startMoveLeft(event){
 
     event.preventDefault();
 
-    movingLeft=true;
+    movingLeft = true;
+
+    try{
+        leftButton.setPointerCapture(event.pointerId);
+    }
+    catch(error){}
 
 }
 
 
-function releaseLeft(event){
+function stopMoveLeft(event){
 
     event.preventDefault();
 
-    movingLeft=false;
+    movingLeft = false;
 
 }
 
-
-
-function pressRight(event){
-
-    event.preventDefault();
-
-    movingRight=true;
-
-}
-
-
-function releaseRight(event){
-
-    event.preventDefault();
-
-    movingRight=false;
-
-}
-
-
-
-/* IZQUIERDA */
 
 leftButton.addEventListener(
-    "touchstart",
-    pressLeft,
-    {passive:false}
+    "pointerdown",
+    startMoveLeft
 );
 
 leftButton.addEventListener(
-    "touchend",
-    releaseLeft,
-    {passive:false}
+    "pointerup",
+    stopMoveLeft
 );
 
 leftButton.addEventListener(
-    "touchcancel",
-    releaseLeft,
-    {passive:false}
+    "pointercancel",
+    stopMoveLeft
+);
+
+leftButton.addEventListener(
+    "lostpointercapture",
+    function(){
+
+        movingLeft = false;
+
+    }
 );
 
 
+/* =====================================================
+   CONTROLES DERECHA
+   ===================================================== */
 
-/* DERECHA */
+function startMoveRight(event){
+
+    event.preventDefault();
+
+    movingRight = true;
+
+    try{
+        rightButton.setPointerCapture(event.pointerId);
+    }
+    catch(error){}
+
+}
+
+
+function stopMoveRight(event){
+
+    event.preventDefault();
+
+    movingRight = false;
+
+}
+
 
 rightButton.addEventListener(
-    "touchstart",
-    pressRight,
-    {passive:false}
+    "pointerdown",
+    startMoveRight
 );
 
 rightButton.addEventListener(
-    "touchend",
-    releaseRight,
-    {passive:false}
+    "pointerup",
+    stopMoveRight
 );
 
 rightButton.addEventListener(
-    "touchcancel",
-    releaseRight,
-    {passive:false}
+    "pointercancel",
+    stopMoveRight
 );
 
+rightButton.addEventListener(
+    "lostpointercapture",
+    function(){
+
+        movingRight = false;
+
+    }
+);
 
 
 /* =====================================================
@@ -903,28 +887,26 @@ document.addEventListener(
     function(event){
 
         if(
-            event.key==="ArrowLeft" ||
-            event.key.toLowerCase()==="a"
+            event.key === "ArrowLeft" ||
+            event.key.toLowerCase() === "a"
         ){
 
-            movingLeft=true;
+            movingLeft = true;
 
         }
 
 
         if(
-            event.key==="ArrowRight" ||
-            event.key.toLowerCase()==="d"
+            event.key === "ArrowRight" ||
+            event.key.toLowerCase() === "d"
         ){
 
-            movingRight=true;
+            movingRight = true;
 
         }
 
 
-        if(
-            event.code==="Space"
-        ){
+        if(event.code === "Space"){
 
             event.preventDefault();
 
@@ -936,33 +918,31 @@ document.addEventListener(
 );
 
 
-
 document.addEventListener(
     "keyup",
     function(event){
 
         if(
-            event.key==="ArrowLeft" ||
-            event.key.toLowerCase()==="a"
+            event.key === "ArrowLeft" ||
+            event.key.toLowerCase() === "a"
         ){
 
-            movingLeft=false;
+            movingLeft = false;
 
         }
 
 
         if(
-            event.key==="ArrowRight" ||
-            event.key.toLowerCase()==="d"
+            event.key === "ArrowRight" ||
+            event.key.toLowerCase() === "d"
         ){
 
-            movingRight=false;
+            movingRight = false;
 
         }
 
     }
 );
-
 
 
 /* =====================================================
@@ -970,42 +950,40 @@ document.addEventListener(
    ===================================================== */
 
 startButton.addEventListener(
-    "click",
-    startGame
+    "pointerdown",
+    function(event){
+
+        event.preventDefault();
+
+        startGame();
+
+    }
 );
 
 
+/* =====================================================
+   PAUSA
+   ===================================================== */
 
 pauseButton.addEventListener(
     "click",
     function(){
 
         if(!playing){
-
             return;
-
         }
 
+        paused = !paused;
 
-        paused=!paused;
-
-
-        if(paused){
-
-            pauseButton.textContent=
-                "Continuar";
-
-        }
-        else{
-
-            pauseButton.textContent=
-                "Pausa";
-
-        }
+        pauseButton.textContent =
+            paused
+            ?
+            "Continuar"
+            :
+            "Pausa";
 
     }
 );
-
 
 
 /* =====================================================
@@ -1014,11 +992,7 @@ pauseButton.addEventListener(
 
 function explosion(x,y){
 
-    for(
-        let i=0;
-        i<18;
-        i++
-    ){
+    for(let i = 0; i < 20; i++){
 
         particles.push({
 
@@ -1027,23 +1001,22 @@ function explosion(x,y){
             y:y,
 
             vx:
-                (Math.random()-.5)*
-                280,
+                (Math.random() - .5) *
+                320,
 
             vy:
-                (Math.random()-.5)*
-                280,
+                (Math.random() - .5) *
+                320,
 
             life:
-                .4+
-                Math.random()*.6
+                .4 +
+                Math.random() * .6
 
         });
 
     }
 
 }
-
 
 
 /* =====================================================
@@ -1061,154 +1034,141 @@ function showLove(){
 }
 
 
-
 /* =====================================================
    GAME OVER
    ===================================================== */
 
 function gameOver(){
 
-    playing=false;
+    playing = false;
 
-    menu.style.display="flex";
+    movingLeft = false;
+    movingRight = false;
 
-    menu.querySelector("h1").textContent=
+    menu.style.display = "flex";
+
+    menu.querySelector("h1").textContent =
         "FIN DEL JUEGO 💔";
 
-    menu.querySelector("p").innerHTML=
-        "Puntaje final: <b>"+
-        score+
-        "</b><br><br>"+
+    menu.querySelector("p").innerHTML =
+        "Puntaje final: <b>" +
+        score +
+        "</b><br><br>" +
         "Pero recuerda... ❤️";
 
-    startButton.textContent=
+    startButton.textContent =
         "🚀 JUGAR DE NUEVO";
 
 }
 
 
-
 /* =====================================================
-   ACTUALIZAR JUEGO
+   ACTUALIZAR
    ===================================================== */
 
 function update(delta){
 
     if(!playing || paused){
-
         return;
-
     }
 
 
-    /* JUGADOR */
+    /* =========================
+       JUGADOR
+       ========================= */
 
     if(movingLeft){
 
         player.x -=
-            player.speed*
-            delta;
+            player.speed * delta;
 
     }
-
 
     if(movingRight){
 
         player.x +=
-            player.speed*
-            delta;
+            player.speed * delta;
 
     }
 
 
-    player.x=
+    player.x =
         Math.max(
             30,
             Math.min(
-                W-30,
+                W - 30,
                 player.x
             )
         );
 
 
-    player.cooldown=
+    player.cooldown =
         Math.max(
             0,
-            player.cooldown-delta
+            player.cooldown - delta
         );
 
 
+    /* =========================
+       ESTRELLAS
+       ========================= */
 
-    /* ESTRELLAS */
-
-    for(
-        let star of stars
-    ){
+    for(const star of stars){
 
         star.y +=
-            star.speed*
-            delta;
+            star.speed * delta;
 
+        if(star.y > H){
 
-        if(star.y>H){
+            star.y = 0;
 
-            star.y=0;
-
-            star.x=
-                Math.random()*W;
+            star.x =
+                Math.random() * W;
 
         }
 
     }
 
 
+    /* =========================
+       BALAS
+       ========================= */
 
-    /* BALAS */
-
-    for(
-        let bullet of bullets
-    ){
+    for(const bullet of bullets){
 
         bullet.y -=
-            bullet.speed*
-            delta;
+            bullet.speed * delta;
 
     }
 
 
-    bullets=
+    bullets =
         bullets.filter(
-            bullet=>
-                bullet.y>-30
+            bullet =>
+                bullet.y > -40
         );
 
 
+    /* =========================
+       ALIENS
+       ========================= */
 
-    /* ALIENS */
-
-    let speed=
-        40+
-        score*.2;
-
-
-    let changeDirection=false;
+    const speed =
+        45 +
+        score * .15;
 
 
-    for(
-        let alien of aliens
-    ){
+    let changeDirection = false;
+
+
+    for(const alien of aliens){
 
         if(
-            alien.x+
-            alien.width/2
-            >=W-20 ||
-
-            alien.x-
-            alien.width/2
-            <=20
+            alien.x + alien.width / 2 >= W - 20 ||
+            alien.x - alien.width / 2 <= 20
         ){
 
-            changeDirection=true;
+            changeDirection = true;
 
         }
 
@@ -1217,98 +1177,83 @@ function update(delta){
 
     if(changeDirection){
 
-        for(
-            let alien of aliens
-        ){
+        for(const alien of aliens){
 
-            alien.direction*=-1;
+            alien.direction *= -1;
 
-            alien.y+=22;
+            alien.y += 22;
 
         }
 
     }
 
 
-    for(
-        let alien of aliens
-    ){
+    for(const alien of aliens){
 
         alien.x +=
-            alien.direction*
-            speed*
+            alien.direction *
+            speed *
             delta;
 
     }
 
 
-
-    /* COLISIONES */
+    /* =========================
+       COLISIONES
+       ========================= */
 
     for(
-        let b=bullets.length-1;
-        b>=0;
+        let b = bullets.length - 1;
+        b >= 0;
         b--
     ){
 
-        let bullet=
-            bullets[b];
+        const bullet = bullets[b];
 
 
         for(
-            let a=aliens.length-1;
-            a>=0;
+            let a = aliens.length - 1;
+            a >= 0;
             a--
         ){
 
-            let alien=
-                aliens[a];
+            const alien = aliens[a];
 
 
-            let collision=
+            const collision =
 
                 Math.abs(
-                    bullet.x-alien.x
+                    bullet.x - alien.x
                 )
                 <
-                alien.width*.55
+                alien.width * .55
 
                 &&
 
                 Math.abs(
-                    bullet.y-alien.y
+                    bullet.y - alien.y
                 )
                 <
-                alien.height*.65;
+                alien.height * .65;
 
 
             if(collision){
 
-                bullets.splice(
-                    b,
-                    1
-                );
+                bullets.splice(b,1);
 
-                aliens.splice(
-                    a,
-                    1
-                );
+                aliens.splice(a,1);
 
+                score += 10;
 
-                score+=10;
-
-                scoreElement.textContent=
+                scoreElement.textContent =
                     score;
-
 
                 explosion(
                     alien.x,
                     alien.y
                 );
 
-
                 showLove();
-
 
                 break;
 
@@ -1319,16 +1264,15 @@ function update(delta){
     }
 
 
+    /* =========================
+       ALIENS LLEGAN ABAJO
+       ========================= */
 
-    /* ALIENS LLEGAN AL JUGADOR */
-
-    for(
-        let alien of aliens
-    ){
+    for(const alien of aliens){
 
         if(
-            alien.y>
-            player.y-20
+            alien.y >
+            player.y - 20
         ){
 
             gameOver();
@@ -1340,16 +1284,20 @@ function update(delta){
     }
 
 
-
-    /* NIVEL TERMINADO */
+    /* =========================
+       NIVEL TERMINADO
+       ========================= */
 
     if(
-        aliens.length===0
+        aliens.length === 0 &&
+        !levelStarting
     ){
 
-        score+=100;
+        levelStarting = true;
 
-        scoreElement.textContent=
+        score += 100;
+
+        scoreElement.textContent =
             score;
 
 
@@ -1358,35 +1306,33 @@ function update(delta){
 
                 if(playing){
 
-                    startGame();
+                    createAliens();
+
+                    levelStarting = false;
 
                 }
 
             },
-            500
+            700
         );
 
     }
 
 
+    /* =========================
+       PARTÍCULAS
+       ========================= */
 
-    /* PARTÍCULAS */
-
-    for(
-        let particle of particles
-    ){
+    for(const particle of particles){
 
         particle.x +=
-            particle.vx*
-            delta;
+            particle.vx * delta;
 
         particle.y +=
-            particle.vy*
-            delta;
+            particle.vy * delta;
 
         particle.vy +=
-            200*
-            delta;
+            200 * delta;
 
         particle.life -=
             delta;
@@ -1394,14 +1340,13 @@ function update(delta){
     }
 
 
-    particles=
+    particles =
         particles.filter(
-            particle=>
-                particle.life>0
+            particle =>
+                particle.life > 0
         );
 
 }
-
 
 
 /* =====================================================
@@ -1409,6 +1354,10 @@ function update(delta){
    ===================================================== */
 
 function drawPlayer(){
+
+    if(!player){
+        return;
+    }
 
     ctx.save();
 
@@ -1418,13 +1367,36 @@ function drawPlayer(){
     );
 
 
-    ctx.fillStyle=
+    /* fuego */
+
+    ctx.fillStyle = "#ff7b35";
+
+    ctx.shadowColor = "#ff5722";
+
+    ctx.shadowBlur = 15;
+
+    ctx.beginPath();
+
+    ctx.moveTo(-8,15);
+
+    ctx.lineTo(0,30);
+
+    ctx.lineTo(8,15);
+
+    ctx.closePath();
+
+    ctx.fill();
+
+
+    /* nave */
+
+    ctx.fillStyle =
         "#8eeaff";
 
-    ctx.shadowColor=
+    ctx.shadowColor =
         "#33dfff";
 
-    ctx.shadowBlur=15;
+    ctx.shadowBlur = 15;
 
 
     ctx.beginPath();
@@ -1464,10 +1436,13 @@ function drawPlayer(){
     ctx.fill();
 
 
-    ctx.shadowBlur=0;
+    ctx.shadowBlur = 0;
 
 
-    ctx.fillStyle="white";
+    /* ventana */
+
+    ctx.fillStyle =
+        "white";
 
     ctx.beginPath();
 
@@ -1476,7 +1451,7 @@ function drawPlayer(){
         -8,
         5,
         0,
-        Math.PI*2
+        Math.PI * 2
     );
 
     ctx.fill();
@@ -1485,7 +1460,6 @@ function drawPlayer(){
     ctx.restore();
 
 }
-
 
 
 /* =====================================================
@@ -1502,7 +1476,7 @@ function drawAlien(alien){
     );
 
 
-    let image=
+    const image =
         alienImages[
             alien.imageIndex
         ];
@@ -1511,49 +1485,49 @@ function drawAlien(alien){
     if(
         image &&
         image.complete &&
-        image.naturalWidth>0
+        image.naturalWidth > 0
     ){
 
-        let scale=
+        const scale =
             Math.min(
-                alien.width/
+                alien.width /
                     image.naturalWidth,
 
-                alien.height/
+                alien.height /
                     image.naturalHeight
             );
 
 
-        let width=
-            image.naturalWidth*
+        const width =
+            image.naturalWidth *
             scale;
 
-        let height=
-            image.naturalHeight*
+
+        const height =
+            image.naturalHeight *
             scale;
 
 
         ctx.drawImage(
             image,
-            -width/2,
-            -height/2,
+            -width / 2,
+            -height / 2,
             width,
             height
         );
 
     }
-
     else{
 
         /* ALIEN POR DEFECTO */
 
-        ctx.fillStyle=
+        ctx.fillStyle =
             "#72ff7a";
 
-        ctx.shadowColor=
+        ctx.shadowColor =
             "#40ff55";
 
-        ctx.shadowBlur=10;
+        ctx.shadowBlur = 10;
 
 
         ctx.fillRect(
@@ -1580,10 +1554,10 @@ function drawAlien(alien){
         );
 
 
-        ctx.shadowBlur=0;
+        ctx.shadowBlur = 0;
 
 
-        ctx.fillStyle=
+        ctx.fillStyle =
             "#07100a";
 
 
@@ -1610,7 +1584,6 @@ function drawAlien(alien){
 }
 
 
-
 /* =====================================================
    DIBUJAR TODO
    ===================================================== */
@@ -1625,15 +1598,16 @@ function draw(){
     );
 
 
-    /* ESTRELLAS */
+    /* =========================
+       ESTRELLAS
+       ========================= */
 
-    for(
-        let star of stars
-    ){
+    for(const star of stars){
 
-        ctx.globalAlpha=.4;
+        ctx.globalAlpha = .4;
 
-        ctx.fillStyle="white";
+        ctx.fillStyle =
+            "white";
 
         ctx.fillRect(
             star.x,
@@ -1644,52 +1618,51 @@ function draw(){
 
     }
 
-
-    ctx.globalAlpha=1;
+    ctx.globalAlpha = 1;
 
 
     if(!player){
-
         return;
-
     }
 
 
-    /* NAVE */
+    /* =========================
+       NAVE
+       ========================= */
 
     drawPlayer();
 
 
-    /* ALIENS */
+    /* =========================
+       ALIENS
+       ========================= */
 
-    for(
-        let alien of aliens
-    ){
+    for(const alien of aliens){
 
         drawAlien(alien);
 
     }
 
 
-    /* BALAS */
+    /* =========================
+       BALAS
+       ========================= */
 
-    ctx.fillStyle=
+    ctx.fillStyle =
         "#fff16a";
 
-    ctx.shadowColor=
+    ctx.shadowColor =
         "#fff16a";
 
-    ctx.shadowBlur=12;
+    ctx.shadowBlur = 12;
 
 
-    for(
-        let bullet of bullets
-    ){
+    for(const bullet of bullets){
 
         ctx.fillRect(
 
-            bullet.x-
-            bullet.width/2,
+            bullet.x -
+            bullet.width / 2,
 
             bullet.y,
 
@@ -1702,22 +1675,22 @@ function draw(){
     }
 
 
-    ctx.shadowBlur=0;
+    ctx.shadowBlur = 0;
 
 
-    /* EXPLOSIONES */
+    /* =========================
+       EXPLOSIONES
+       ========================= */
 
-    for(
-        let particle of particles
-    ){
+    for(const particle of particles){
 
-        ctx.globalAlpha=
+        ctx.globalAlpha =
             Math.max(
                 0,
                 particle.life
             );
 
-        ctx.fillStyle=
+        ctx.fillStyle =
             "#ff5b8a";
 
 
@@ -1731,10 +1704,9 @@ function draw(){
     }
 
 
-    ctx.globalAlpha=1;
+    ctx.globalAlpha = 1;
 
 }
-
 
 
 /* =====================================================
@@ -1743,14 +1715,21 @@ function draw(){
 
 function gameLoop(time){
 
-    let delta=
-        (time-lastTime)/1000;
+    if(!lastTime){
+
+        lastTime = time;
+
+    }
 
 
-    lastTime=time;
+    let delta =
+        (time - lastTime) / 1000;
 
 
-    delta=
+    lastTime = time;
+
+
+    delta =
         Math.min(
             delta,
             .033
