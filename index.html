@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
+
 <meta charset="UTF-8">
 
 <meta name="viewport"
@@ -187,14 +189,13 @@ canvas{
     color:white;
 
     font-size:28px;
+
     font-weight:bold;
 
     touch-action:none;
 
     user-select:none;
     -webkit-user-select:none;
-
-    -webkit-touch-callout:none;
 }
 
 .ctrl:active{
@@ -233,6 +234,7 @@ canvas{
     display:flex;
 
     flex-direction:column;
+
     justify-content:center;
     align-items:center;
 
@@ -286,13 +288,16 @@ canvas{
 }
 
 </style>
+
 </head>
+
 
 <body>
 
 <div id="game">
 
 <canvas id="canvas"></canvas>
+
 
 <div id="top">
 
@@ -308,9 +313,11 @@ Puntos:
 
 </div>
 
+
 <button id="pause">
 Pausa
 </button>
+
 
 <div id="love">
 
@@ -327,6 +334,7 @@ MIL BESOS 😘😘😘
 </span>
 
 </div>
+
 
 <div id="controls">
 
@@ -348,6 +356,7 @@ MIL BESOS 😘😘😘
 
 </div>
 
+
 <button
     type="button"
     class="ctrl"
@@ -356,6 +365,7 @@ DISPARAR
 </button>
 
 </div>
+
 
 <div id="menu">
 
@@ -398,6 +408,7 @@ Cada vez que destruyas uno aparecerá:
 
 <script>
 
+
 /* =====================================================
    IMÁGENES DE LOS ALIENS
    ===================================================== */
@@ -405,10 +416,10 @@ Cada vez que destruyas uno aparecerá:
 const ALIEN_IMAGES = [
 
     /*
-    Ejemplo:
+       Pega aquí tus imágenes:
 
-    "https://tusitio.com/alien1.png",
-    "https://tusitio.com/alien2.png"
+       "https://tusitio.com/alien1.png",
+       "https://tusitio.com/alien2.png"
 
     */
 
@@ -416,7 +427,74 @@ const ALIEN_IMAGES = [
 
 
 /* =====================================================
-   ELEMENTOS
+   FRASES DE AMOR ❤️
+   ===================================================== */
+
+const LOVE_PHRASES = [
+
+    "¡TE AMO MUCHO MI VIDA! ❤️❤️❤️",
+
+    "¡TE AMOOO LISS! 💖😘❤️",
+
+    "¡FELIZ PRIMER ANIVERSARIO MI VIDA! 💕🥰",
+
+    "¡ERES EL AMOR DE MI VIDA! ❤️❤️",
+
+    "¡TE AMO MÁS CADA DÍA! 💖💖💖",
+
+    "¡ERES MI TODO, MI VIDA! ❤️🥹❤️",
+
+    "¡GRACIAS POR EXISTIR! 💕😘",
+
+    "¡ME HACES EL HOMBRE MÁS FELIZ! ❤️🥰",
+
+    "¡TE AMO CON TODO MI CORAZÓN! ❤️❤️❤️",
+
+    "¡ERES LO MEJOR DE MI VIDA! 💖✨",
+
+    "¡MI NIÑA HERMOSA, TE AMO! 😘❤️",
+
+    "¡QUIERO ESTAR CONTIGO PARA SIEMPRE! 💕♾️",
+
+    "¡CADA MOMENTO CONTIGO ES INCREÍBLE! ❤️🥰",
+
+    "¡TE AMO INFINITAMENTE! ❤️♾️❤️",
+
+    "¡ERES MI PERSONA FAVORITA! 💖😘",
+
+    "¡MI VIDA ES MÁS BONITA CONTIGO! ❤️✨",
+
+    "¡NUNCA DEJARÉ DE AMARTE! ❤️❤️❤️",
+
+    "¡TE AMO DEMASIADO, LISS! 💕🥹",
+
+    "¡GRACIAS POR TANTOS MOMENTOS HERMOSOS! ❤️",
+
+    "¡TÚ Y YO PARA SIEMPRE! 💖♾️",
+
+    "¡ERES MI FELICIDAD! ❤️🥰❤️",
+
+    "¡TE AMO MI AMOR HERMOSO! 💕😘",
+
+    "¡MI CORAZÓN ES TUYO! ❤️❤️❤️",
+
+    "¡ERES MI TODOOO! 💖💖💖",
+
+    "¡TE AMO HOY, MAÑANA Y SIEMPRE! ❤️♾️",
+
+    "¡QUÉ SUERTE TENGO DE TENERTE! 🥰❤️",
+
+    "¡LISS, ERES EL AMOR DE MI VIDA! 💕❤️",
+
+    "¡QUIERO MUCHOS AÑOS MÁS CONTIGO! ❤️💖",
+
+    "¡TE AMO HASTA EL INFINITO! ❤️🌙✨"
+
+];
+
+
+/* =====================================================
+   VARIABLES
    ===================================================== */
 
 const canvas =
@@ -424,6 +502,7 @@ const canvas =
 
 const ctx =
     canvas.getContext("2d");
+
 
 const scoreElement =
     document.getElementById("score");
@@ -434,6 +513,7 @@ const livesElement =
 const loveElement =
     document.getElementById("love");
 
+
 const menu =
     document.getElementById("menu");
 
@@ -442,6 +522,7 @@ const startButton =
 
 const pauseButton =
     document.getElementById("pause");
+
 
 const leftButton =
     document.getElementById("left");
@@ -452,10 +533,6 @@ const rightButton =
 const fireButton =
     document.getElementById("fire");
 
-
-/* =====================================================
-   VARIABLES
-   ===================================================== */
 
 let W = 0;
 let H = 0;
@@ -484,16 +561,30 @@ let levelStarting = false;
 
 
 /* =====================================================
-   CANVAS
+   VARIABLES DEL JEFE 👑
+   ===================================================== */
+
+let boss = null;
+
+let bossActive = false;
+
+let bossMessageActive = false;
+
+
+/* =====================================================
+   TAMAÑO DEL CANVAS
    ===================================================== */
 
 function resizeCanvas(){
 
     W = window.innerWidth;
+
     H = window.innerHeight;
 
     canvas.width = W;
+
     canvas.height = H;
+
 
     if(player){
 
@@ -504,6 +595,7 @@ function resizeCanvas(){
 }
 
 resizeCanvas();
+
 
 window.addEventListener(
     "resize",
@@ -519,9 +611,15 @@ function loadAlienImages(){
 
     alienImages = [];
 
-    for(let i = 0; i < ALIEN_IMAGES.length; i++){
+
+    for(
+        let i = 0;
+        i < ALIEN_IMAGES.length;
+        i++
+    ){
 
         const image = new Image();
+
 
         image.onload = function(){
 
@@ -529,7 +627,10 @@ function loadAlienImages(){
 
         };
 
-        image.src = ALIEN_IMAGES[i];
+
+        image.src =
+            ALIEN_IMAGES[i];
+
 
         alienImages.push(image);
 
@@ -546,23 +647,33 @@ function createStars(){
 
     stars = [];
 
-    for(let i = 0; i < 120; i++){
+
+    for(
+        let i = 0;
+        i < 120;
+        i++
+    ){
 
         stars.push({
 
-            x: Math.random() * W,
+            x:
+                Math.random() * W,
 
-            y: Math.random() * H,
+            y:
+                Math.random() * H,
 
-            size: Math.random() * 2 + .5,
+            size:
+                Math.random() * 2 + .5,
 
-            speed: Math.random() * 30 + 10
+            speed:
+                Math.random() * 30 + 10
 
         });
 
     }
 
 }
+
 
 createStars();
 
@@ -575,6 +686,7 @@ function createAliens(){
 
     aliens = [];
 
+
     const columns =
         Math.max(
             5,
@@ -584,7 +696,9 @@ function createAliens(){
             )
         );
 
+
     const rows = 3;
+
 
     const spacing =
         Math.min(
@@ -592,14 +706,23 @@ function createAliens(){
             (W - 60) / columns
         );
 
+
     const startX =
         W / 2 -
         spacing * (columns - 1) / 2;
 
 
-    for(let row = 0; row < rows; row++){
+    for(
+        let row = 0;
+        row < rows;
+        row++
+    ){
 
-        for(let column = 0; column < columns; column++){
+        for(
+            let column = 0;
+            column < columns;
+            column++
+        ){
 
             aliens.push({
 
@@ -620,7 +743,11 @@ function createAliens(){
                 imageIndex:
                     ALIEN_IMAGES.length > 0
                     ?
-                    (row * columns + column) %
+                    (
+                        row * columns +
+                        column
+                    )
+                    %
                     ALIEN_IMAGES.length
                     :
                     0
@@ -642,50 +769,78 @@ function startGame(){
 
     loadAlienImages();
 
+
     score = 0;
+
     lives = 3;
 
-    scoreElement.textContent = score;
-    livesElement.textContent = lives;
+
+    scoreElement.textContent =
+        score;
+
+    livesElement.textContent =
+        lives;
+
 
     player = {
 
-        x: W / 2,
+        x:
+            W / 2,
 
-        y: H - 110,
+        y:
+            H - 110,
 
-        width: 50,
+        width:50,
 
-        height: 35,
+        height:35,
 
-        speed: 380,
+        speed:380,
 
-        cooldown: 0
+        cooldown:0
 
     };
 
+
     bullets = [];
+
     particles = [];
 
+
     movingLeft = false;
+
     movingRight = false;
+
 
     levelStarting = false;
 
+
+    boss = null;
+
+    bossActive = false;
+
+    bossMessageActive = false;
+
+
     createAliens();
 
+
     playing = true;
+
     paused = false;
 
-    pauseButton.textContent = "Pausa";
 
-    menu.style.display = "none";
+    pauseButton.textContent =
+        "Pausa";
+
+
+    menu.style.display =
+        "none";
 
 }
 
 
 /* =====================================================
-   DISPARAR
+   DISPARAR 🚀
    ===================================================== */
 
 function shoot(){
@@ -694,13 +849,16 @@ function shoot(){
         return;
     }
 
+
     if(paused){
         return;
     }
 
+
     if(!player){
         return;
     }
+
 
     if(player.cooldown > 0){
         return;
@@ -709,20 +867,23 @@ function shoot(){
 
     bullets.push({
 
-        x: player.x,
+        x:
+            player.x,
 
-        y: player.y - 30,
+        y:
+            player.y - 30,
 
-        width: 6,
+        width:6,
 
-        height: 20,
+        height:20,
 
-        speed: 720
+        speed:720
 
     });
 
 
-    player.cooldown = .18;
+    player.cooldown =
+        .18;
 
 }
 
@@ -731,26 +892,12 @@ function shoot(){
    BOTÓN DISPARAR
    ===================================================== */
 
-/*
-   IMPORTANTE:
-
-   Usamos POINTER EVENTS.
-
-   Esto funciona para:
-
-   - Android
-   - iPhone
-   - Tablet
-   - Mouse
-   - PC
-   - Pantallas táctiles
-*/
-
 fireButton.addEventListener(
     "pointerdown",
     function(event){
 
         event.preventDefault();
+
         event.stopPropagation();
 
         shoot();
@@ -758,11 +905,6 @@ fireButton.addEventListener(
     }
 );
 
-
-/*
-   Evita que el navegador genere
-   comportamientos adicionales.
-*/
 
 fireButton.addEventListener(
     "click",
@@ -775,7 +917,7 @@ fireButton.addEventListener(
 
 
 /* =====================================================
-   CONTROLES IZQUIERDA
+   IZQUIERDA
    ===================================================== */
 
 function startMoveLeft(event){
@@ -784,8 +926,13 @@ function startMoveLeft(event){
 
     movingLeft = true;
 
+
     try{
-        leftButton.setPointerCapture(event.pointerId);
+
+        leftButton.setPointerCapture(
+            event.pointerId
+        );
+
     }
     catch(error){}
 
@@ -806,15 +953,18 @@ leftButton.addEventListener(
     startMoveLeft
 );
 
+
 leftButton.addEventListener(
     "pointerup",
     stopMoveLeft
 );
 
+
 leftButton.addEventListener(
     "pointercancel",
     stopMoveLeft
 );
+
 
 leftButton.addEventListener(
     "lostpointercapture",
@@ -827,7 +977,7 @@ leftButton.addEventListener(
 
 
 /* =====================================================
-   CONTROLES DERECHA
+   DERECHA
    ===================================================== */
 
 function startMoveRight(event){
@@ -836,8 +986,13 @@ function startMoveRight(event){
 
     movingRight = true;
 
+
     try{
-        rightButton.setPointerCapture(event.pointerId);
+
+        rightButton.setPointerCapture(
+            event.pointerId
+        );
+
     }
     catch(error){}
 
@@ -858,15 +1013,18 @@ rightButton.addEventListener(
     startMoveRight
 );
 
+
 rightButton.addEventListener(
     "pointerup",
     stopMoveRight
 );
 
+
 rightButton.addEventListener(
     "pointercancel",
     stopMoveRight
 );
+
 
 rightButton.addEventListener(
     "lostpointercapture",
@@ -973,7 +1131,10 @@ pauseButton.addEventListener(
             return;
         }
 
-        paused = !paused;
+
+        paused =
+            !paused;
+
 
         pauseButton.textContent =
             paused
@@ -992,7 +1153,11 @@ pauseButton.addEventListener(
 
 function explosion(x,y){
 
-    for(let i = 0; i < 20; i++){
+    for(
+        let i = 0;
+        i < 20;
+        i++
+    ){
 
         particles.push({
 
@@ -1020,21 +1185,121 @@ function explosion(x,y){
 
 
 /* =====================================================
-   MENSAJE DE AMOR
+   FRASE DE AMOR ❤️
    ===================================================== */
 
 function showLove(){
 
-    loveElement.classList.remove("show");
+    const randomIndex =
+        Math.floor(
+            Math.random() *
+            LOVE_PHRASES.length
+        );
+
+
+    loveElement.innerHTML =
+        LOVE_PHRASES[randomIndex];
+
+
+    loveElement.classList.remove(
+        "show"
+    );
+
 
     void loveElement.offsetWidth;
 
-    loveElement.classList.add("show");
+
+    loveElement.classList.add(
+        "show"
+    );
 
 }
 
 
 /* =====================================================
+   MENSAJE DEL JEFE ❤️
+   ===================================================== */
+
+function showBossLove(){
+
+    bossMessageActive = true;
+
+
+    loveElement.innerHTML =
+
+        "❤️❤️❤️<br>" +
+
+        "<span style='font-size:.65em'>" +
+
+        "LA VERDAD ERES LO MEJOR<br>" +
+
+        "QUE ME HA PASADO ❤️<br><br>" +
+
+        "ERES MI TODO 💖<br><br>" +
+
+        "MUCHAS GRACIAS POR TODO<br>" +
+
+        "ESTE TIEMPO, MI VIDA ❤️🥹❤️" +
+
+        "</span>" +
+
+        "<br>❤️❤️❤️";
+
+
+    loveElement.classList.remove(
+        "show"
+    );
+
+
+    void loveElement.offsetWidth;
+
+
+    loveElement.classList.add(
+        "show"
+    );
+
+}
+
+
+/* =====================================================
+   CREAR JEFE 👑
+   ===================================================== */
+
+function createBoss(){
+
+    boss = {
+
+        x:
+            W / 2,
+
+        y:
+            120,
+
+        width:
+            100,
+
+        height:
+            80,
+
+        health:
+            20,
+
+        maxHealth:
+            20,
+
+        direction:
+            1,
+
+        speed:
+            100
+
+    };
+
+
+    bossActive = true;
+      }
+
+      /* =====================================================
    GAME OVER
    ===================================================== */
 
@@ -1044,6 +1309,9 @@ function gameOver(){
 
     movingLeft = false;
     movingRight = false;
+
+    boss = null;
+    bossActive = false;
 
     menu.style.display = "flex";
 
@@ -1063,7 +1331,7 @@ function gameOver(){
 
 
 /* =====================================================
-   ACTUALIZAR
+   ACTUALIZAR JUEGO
    ===================================================== */
 
 function update(delta){
@@ -1073,9 +1341,9 @@ function update(delta){
     }
 
 
-    /* =========================
+    /* =================================================
        JUGADOR
-       ========================= */
+       ================================================= */
 
     if(movingLeft){
 
@@ -1083,6 +1351,7 @@ function update(delta){
             player.speed * delta;
 
     }
+
 
     if(movingRight){
 
@@ -1109,14 +1378,15 @@ function update(delta){
         );
 
 
-    /* =========================
+    /* =================================================
        ESTRELLAS
-       ========================= */
+       ================================================= */
 
     for(const star of stars){
 
         star.y +=
             star.speed * delta;
+
 
         if(star.y > H){
 
@@ -1130,9 +1400,9 @@ function update(delta){
     }
 
 
-    /* =========================
+    /* =================================================
        BALAS
-       ========================= */
+       ================================================= */
 
     for(const bullet of bullets){
 
@@ -1149,9 +1419,33 @@ function update(delta){
         );
 
 
-    /* =========================
+    /* =================================================
+       JEFE 👑
+       ================================================= */
+
+    if(bossActive && boss){
+
+        boss.x +=
+            boss.direction *
+            boss.speed *
+            delta;
+
+
+        if(
+            boss.x + boss.width / 2 >= W - 20 ||
+            boss.x - boss.width / 2 <= 20
+        ){
+
+            boss.direction *= -1;
+
+        }
+
+    }
+
+
+    /* =================================================
        ALIENS
-       ========================= */
+       ================================================= */
 
     const speed =
         45 +
@@ -1161,46 +1455,56 @@ function update(delta){
     let changeDirection = false;
 
 
-    for(const alien of aliens){
+    /*
+       Si hay jefe, los aliens normales
+       dejan de moverse para que el jefe
+       sea el protagonista.
+    */
 
-        if(
-            alien.x + alien.width / 2 >= W - 20 ||
-            alien.x - alien.width / 2 <= 20
-        ){
-
-            changeDirection = true;
-
-        }
-
-    }
-
-
-    if(changeDirection){
+    if(!bossActive){
 
         for(const alien of aliens){
 
-            alien.direction *= -1;
+            if(
+                alien.x + alien.width / 2 >= W - 20 ||
+                alien.x - alien.width / 2 <= 20
+            ){
 
-            alien.y += 22;
+                changeDirection = true;
+
+            }
+
+        }
+
+
+        if(changeDirection){
+
+            for(const alien of aliens){
+
+                alien.direction *= -1;
+
+                alien.y += 22;
+
+            }
+
+        }
+
+
+        for(const alien of aliens){
+
+            alien.x +=
+                alien.direction *
+                speed *
+                delta;
 
         }
 
     }
 
 
-    for(const alien of aliens){
-
-        alien.x +=
-            alien.direction *
-            speed *
-            delta;
-
-    }
-
-
-    /* =========================
-       COLISIONES
-       ========================= */
+    /* =================================================
+       COLISIONES BALAS / ALIENS
+       ================================================= */
 
     for(
         let b = bullets.length - 1;
@@ -1208,7 +1512,8 @@ function update(delta){
         b--
     ){
 
-        const bullet = bullets[b];
+        const bullet =
+            bullets[b];
 
 
         for(
@@ -1217,7 +1522,8 @@ function update(delta){
             a--
         ){
 
-            const alien = aliens[a];
+            const alien =
+                aliens[a];
 
 
             const collision =
@@ -1239,21 +1545,37 @@ function update(delta){
 
             if(collision){
 
-                bullets.splice(b,1);
+                bullets.splice(
+                    b,
+                    1
+                );
 
-                aliens.splice(a,1);
+
+                aliens.splice(
+                    a,
+                    1
+                );
+
 
                 score += 10;
 
+
                 scoreElement.textContent =
                     score;
+
 
                 explosion(
                     alien.x,
                     alien.y
                 );
 
+
+                /*
+                   FRASE DIFERENTE/ALEATORIA ❤️
+                */
+
                 showLove();
+
 
                 break;
 
@@ -1264,75 +1586,243 @@ function update(delta){
     }
 
 
-    /* =========================
-       ALIENS LLEGAN ABAJO
-       ========================= */
+    /* =================================================
+       BALAS CONTRA JEFE 👑
+       ================================================= */
 
-    for(const alien of aliens){
+    if(bossActive && boss){
 
-        if(
-            alien.y >
-            player.y - 20
+        for(
+            let b = bullets.length - 1;
+            b >= 0;
+            b--
         ){
 
-            gameOver();
+            const bullet =
+                bullets[b];
 
-            return;
+
+            const hit =
+
+                Math.abs(
+                    bullet.x - boss.x
+                )
+                <
+                boss.width * .55
+
+                &&
+
+                Math.abs(
+                    bullet.y - boss.y
+                )
+                <
+                boss.height * .55;
+
+
+            if(hit){
+
+                bullets.splice(
+                    b,
+                    1
+                );
+
+
+                boss.health--;
+
+
+                explosion(
+                    bullet.x,
+                    bullet.y
+                );
+
+
+                /*
+                   JEFE DERROTADO
+                */
+
+                if(boss.health <= 0){
+
+                    explosion(
+                        boss.x,
+                        boss.y
+                    );
+
+
+                    explosion(
+                        boss.x - 35,
+                        boss.y
+                    );
+
+
+                    explosion(
+                        boss.x + 35,
+                        boss.y
+                    );
+
+
+                    explosion(
+                        boss.x,
+                        boss.y - 30
+                    );
+
+
+                    /*
+                       BONUS DEL JEFE
+                    */
+
+                    score += 100;
+
+
+                    scoreElement.textContent =
+                        score;
+
+
+                    boss = null;
+
+                    bossActive = false;
+
+
+                    /*
+                       MENSAJE ESPECIAL ❤️
+                    */
+
+                    showBossLove();
+
+
+                    /*
+                       Después de un momento
+                       desaparecen los aliens
+                       anteriores y comienza
+                       otra ronda.
+                    */
+
+                    setTimeout(
+                        function(){
+
+                            if(
+                                playing &&
+                                !bossActive
+                            ){
+
+                                createAliens();
+
+                            }
+
+                        },
+                        1200
+                    );
+
+                }
+
+            }
 
         }
 
     }
 
 
-    /* =========================
+    /* =================================================
+       ALIENS LLEGAN AL JUGADOR
+       ================================================= */
+
+    if(!bossActive){
+
+        for(const alien of aliens){
+
+            if(
+                alien.y >
+                player.y - 20
+            ){
+
+                gameOver();
+
+                return;
+
+            }
+
+        }
+
+    }
+
+
+    /* =================================================
        NIVEL TERMINADO
-       ========================= */
+       ================================================= */
 
     if(
         aliens.length === 0 &&
-        !levelStarting
+        !levelStarting &&
+        !bossActive
     ){
 
         levelStarting = true;
 
+
+        /*
+           Cada ronda da 100 puntos.
+        */
+
         score += 100;
+
 
         scoreElement.textContent =
             score;
 
 
-        setTimeout(
-            function(){
+        /*
+           CADA 100 PUNTOS APARECE JEFE 👑
+        */
 
-                if(playing){
+        if(
+            score % 100 === 0
+        ){
 
-                    createAliens();
+            createBoss();
 
-                    levelStarting = false;
+        }
+        else{
 
-                }
+            setTimeout(
+                function(){
 
-            },
-            700
-        );
+                    if(
+                        playing &&
+                        !bossActive
+                    ){
+
+                        createAliens();
+
+                        levelStarting =
+                            false;
+
+                    }
+
+                },
+                700
+            );
+
+        }
 
     }
 
 
-    /* =========================
+    /* =================================================
        PARTÍCULAS
-       ========================= */
+       ================================================= */
 
     for(const particle of particles){
 
         particle.x +=
             particle.vx * delta;
 
+
         particle.y +=
             particle.vy * delta;
 
+
         particle.vy +=
             200 * delta;
+
 
         particle.life -=
             delta;
@@ -1350,7 +1840,7 @@ function update(delta){
 
 
 /* =====================================================
-   DIBUJAR NAVE
+   DIBUJAR NAVE 🚀
    ===================================================== */
 
 function drawPlayer(){
@@ -1359,7 +1849,9 @@ function drawPlayer(){
         return;
     }
 
+
     ctx.save();
+
 
     ctx.translate(
         player.x,
@@ -1367,28 +1859,41 @@ function drawPlayer(){
     );
 
 
-    /* fuego */
+    /* FUEGO */
 
-    ctx.fillStyle = "#ff7b35";
+    ctx.fillStyle =
+        "#ff7b35";
 
-    ctx.shadowColor = "#ff5722";
+    ctx.shadowColor =
+        "#ff5722";
 
-    ctx.shadowBlur = 15;
+    ctx.shadowBlur =
+        15;
+
 
     ctx.beginPath();
 
-    ctx.moveTo(-8,15);
+    ctx.moveTo(
+        -8,
+        15
+    );
 
-    ctx.lineTo(0,30);
+    ctx.lineTo(
+        0,
+        30
+    );
 
-    ctx.lineTo(8,15);
+    ctx.lineTo(
+        8,
+        15
+    );
 
     ctx.closePath();
 
     ctx.fill();
 
 
-    /* nave */
+    /* NAVE */
 
     ctx.fillStyle =
         "#8eeaff";
@@ -1396,7 +1901,8 @@ function drawPlayer(){
     ctx.shadowColor =
         "#33dfff";
 
-    ctx.shadowBlur = 15;
+    ctx.shadowBlur =
+        15;
 
 
     ctx.beginPath();
@@ -1439,10 +1945,11 @@ function drawPlayer(){
     ctx.shadowBlur = 0;
 
 
-    /* ventana */
+    /* VENTANA */
 
     ctx.fillStyle =
         "white";
+
 
     ctx.beginPath();
 
@@ -1463,12 +1970,13 @@ function drawPlayer(){
 
 
 /* =====================================================
-   DIBUJAR ALIEN
+   DIBUJAR ALIEN 👾
    ===================================================== */
 
 function drawAlien(alien){
 
     ctx.save();
+
 
     ctx.translate(
         alien.x,
@@ -1510,8 +2018,10 @@ function drawAlien(alien){
 
         ctx.drawImage(
             image,
+
             -width / 2,
             -height / 2,
+
             width,
             height
         );
@@ -1527,7 +2037,8 @@ function drawAlien(alien){
         ctx.shadowColor =
             "#40ff55";
 
-        ctx.shadowBlur = 10;
+        ctx.shadowBlur =
+            10;
 
 
         ctx.fillRect(
@@ -1585,6 +2096,217 @@ function drawAlien(alien){
 
 
 /* =====================================================
+   DIBUJAR JEFE 👑
+   ===================================================== */
+
+function drawBoss(){
+
+    if(
+        !bossActive ||
+        !boss
+    ){
+
+        return;
+
+    }
+
+
+    ctx.save();
+
+
+    ctx.translate(
+        boss.x,
+        boss.y
+    );
+
+
+    /* AURA */
+
+    ctx.shadowColor =
+        "#ff174f";
+
+    ctx.shadowBlur =
+        30;
+
+
+    /* CUERPO DEL JEFE */
+
+    ctx.fillStyle =
+        "#ff315f";
+
+
+    ctx.beginPath();
+
+    ctx.moveTo(
+        0,
+        -40
+    );
+
+    ctx.lineTo(
+        55,
+        -15
+    );
+
+    ctx.lineTo(
+        45,
+        35
+    );
+
+    ctx.lineTo(
+        20,
+        45
+    );
+
+    ctx.lineTo(
+        0,
+        30
+    );
+
+    ctx.lineTo(
+        -20,
+        45
+    );
+
+    ctx.lineTo(
+        -45,
+        35
+    );
+
+    ctx.lineTo(
+        -55,
+        -15
+    );
+
+    ctx.closePath();
+
+    ctx.fill();
+
+
+    ctx.shadowBlur = 0;
+
+
+    /* OJOS */
+
+    ctx.fillStyle =
+        "white";
+
+
+    ctx.fillRect(
+        -27,
+        -10,
+        15,
+        15
+    );
+
+
+    ctx.fillRect(
+        12,
+        -10,
+        15,
+        15
+    );
+
+
+    /* CORAZÓN */
+
+    ctx.font =
+        "35px Arial";
+
+    ctx.textAlign =
+        "center";
+
+    ctx.textBaseline =
+        "middle";
+
+
+    ctx.fillText(
+        "❤️",
+        0,
+        12
+    );
+
+
+    ctx.restore();
+
+
+    /* =================================================
+       BARRA DE VIDA
+       ================================================= */
+
+    const barWidth = 140;
+
+    const barHeight = 11;
+
+
+    const healthPercent =
+        boss.health /
+        boss.maxHealth;
+
+
+    /* FONDO */
+
+    ctx.fillStyle =
+        "#33000d";
+
+
+    ctx.fillRect(
+        boss.x - barWidth / 2,
+        boss.y - 58,
+        barWidth,
+        barHeight
+    );
+
+
+    /* VIDA */
+
+    ctx.fillStyle =
+        "#ff315f";
+
+
+    ctx.fillRect(
+        boss.x - barWidth / 2,
+        boss.y - 58,
+        barWidth * healthPercent,
+        barHeight
+    );
+
+
+    /* BORDE */
+
+    ctx.strokeStyle =
+        "white";
+
+
+    ctx.strokeRect(
+        boss.x - barWidth / 2,
+        boss.y - 58,
+        barWidth,
+        barHeight
+    );
+
+
+    /* TEXTO */
+
+    ctx.fillStyle =
+        "white";
+
+    ctx.font =
+        "bold 14px Arial";
+
+    ctx.textAlign =
+        "center";
+
+
+    ctx.fillText(
+        "👑 JEFE",
+        boss.x,
+        boss.y - 68
+    );
+
+}
+
+
+/* =====================================================
    DIBUJAR TODO
    ===================================================== */
 
@@ -1598,16 +2320,18 @@ function draw(){
     );
 
 
-    /* =========================
+    /* =================================================
        ESTRELLAS
-       ========================= */
+       ================================================= */
 
     for(const star of stars){
 
-        ctx.globalAlpha = .4;
+        ctx.globalAlpha =
+            .4;
 
         ctx.fillStyle =
             "white";
+
 
         ctx.fillRect(
             star.x,
@@ -1618,24 +2342,27 @@ function draw(){
 
     }
 
+
     ctx.globalAlpha = 1;
 
 
     if(!player){
+
         return;
+
     }
 
 
-    /* =========================
+    /* =================================================
        NAVE
-       ========================= */
+       ================================================= */
 
     drawPlayer();
 
 
-    /* =========================
+    /* =================================================
        ALIENS
-       ========================= */
+       ================================================= */
 
     for(const alien of aliens){
 
@@ -1644,9 +2371,16 @@ function draw(){
     }
 
 
-    /* =========================
+    /* =================================================
+       JEFE
+       ================================================= */
+
+    drawBoss();
+
+
+    /* =================================================
        BALAS
-       ========================= */
+       ================================================= */
 
     ctx.fillStyle =
         "#fff16a";
@@ -1654,7 +2388,8 @@ function draw(){
     ctx.shadowColor =
         "#fff16a";
 
-    ctx.shadowBlur = 12;
+    ctx.shadowBlur =
+        12;
 
 
     for(const bullet of bullets){
@@ -1678,9 +2413,9 @@ function draw(){
     ctx.shadowBlur = 0;
 
 
-    /* =========================
+    /* =================================================
        EXPLOSIONES
-       ========================= */
+       ================================================= */
 
     for(const particle of particles){
 
@@ -1689,6 +2424,7 @@ function draw(){
                 0,
                 particle.life
             );
+
 
         ctx.fillStyle =
             "#ff5b8a";
@@ -1726,7 +2462,8 @@ function gameLoop(time){
         (time - lastTime) / 1000;
 
 
-    lastTime = time;
+    lastTime =
+        time;
 
 
     delta =
@@ -1755,4 +2492,8 @@ requestAnimationFrame(
 </script>
 
 </body>
+
 </html>
+
+
+}
