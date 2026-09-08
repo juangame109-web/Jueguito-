@@ -1,0 +1,1779 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport"
+      content="width=device-width,
+               initial-scale=1.0,
+               maximum-scale=1.0,
+               user-scalable=no">
+
+<title>Space Love ❤️</title>
+
+<style>
+
+*{
+    box-sizing:border-box;
+    -webkit-tap-highlight-color:transparent;
+}
+
+html,body{
+    margin:0;
+    padding:0;
+    width:100%;
+    height:100%;
+    overflow:hidden;
+    background:#050510;
+    font-family:Arial,sans-serif;
+    touch-action:none;
+}
+
+#game{
+    position:relative;
+    width:100vw;
+    height:100vh;
+    overflow:hidden;
+    background:
+        radial-gradient(circle at 50% 20%,
+        #191950 0%,
+        #08081d 45%,
+        #020208 100%);
+}
+
+canvas{
+    position:absolute;
+    inset:0;
+    width:100%;
+    height:100%;
+    display:block;
+}
+
+#top{
+    position:absolute;
+    top:12px;
+    left:0;
+    width:100%;
+    padding:0 15px;
+    display:flex;
+    justify-content:space-between;
+    color:white;
+    font-size:17px;
+    font-weight:bold;
+    z-index:10;
+    pointer-events:none;
+}
+
+#pause{
+    position:absolute;
+    top:45px;
+    right:12px;
+    z-index:20;
+
+    border:0;
+    border-radius:10px;
+    padding:8px 13px;
+
+    color:white;
+    background:#ffffff22;
+
+    font-weight:bold;
+}
+
+#love{
+    position:absolute;
+
+    left:50%;
+    top:42%;
+
+    transform:translate(-50%,-50%) scale(.5);
+
+    width:95%;
+    text-align:center;
+
+    color:#ff4f86;
+
+    font-size:clamp(25px,7vw,55px);
+    font-weight:900;
+
+    line-height:1.15;
+
+    text-shadow:
+        0 0 10px #ff1760,
+        0 0 25px #ff1760;
+
+    opacity:0;
+
+    z-index:30;
+
+    pointer-events:none;
+}
+
+#love.show{
+    animation:loveAnimation .9s ease-out;
+}
+
+@keyframes loveAnimation{
+
+    0%{
+        opacity:0;
+        transform:translate(-50%,-50%) scale(.4);
+    }
+
+    20%{
+        opacity:1;
+        transform:translate(-50%,-50%) scale(1.15);
+    }
+
+    70%{
+        opacity:1;
+        transform:translate(-50%,-50%) scale(1);
+    }
+
+    100%{
+        opacity:0;
+        transform:translate(-50%,-50%) scale(1.05);
+    }
+
+}
+
+#controls{
+
+    position:absolute;
+
+    bottom:15px;
+    left:0;
+
+    width:100%;
+
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+
+    padding:0 15px;
+
+    z-index:20;
+
+    pointer-events:none;
+}
+
+.controlGroup{
+    display:flex;
+    gap:10px;
+
+    pointer-events:auto;
+}
+
+.ctrl{
+
+    width:70px;
+    height:60px;
+
+    border-radius:18px;
+
+    border:1px solid #ffffff33;
+
+    background:#ffffff1c;
+
+    color:white;
+
+    font-size:28px;
+
+    font-weight:bold;
+
+    touch-action:none;
+
+    user-select:none;
+
+    -webkit-user-select:none;
+}
+
+.ctrl:active{
+    transform:scale(.92);
+    background:#ffffff35;
+}
+
+#fire{
+
+    width:100px;
+
+    background:#ff477b;
+
+    font-size:17px;
+
+    box-shadow:
+        0 0 15px #ff477b88;
+
+}
+
+#menu{
+
+    position:absolute;
+
+    inset:0;
+
+    z-index:50;
+
+    display:flex;
+
+    flex-direction:column;
+
+    justify-content:center;
+
+    align-items:center;
+
+    text-align:center;
+
+    padding:25px;
+
+    color:white;
+
+    background:#03030ddd;
+
+}
+
+#menu h1{
+
+    margin:0 0 10px;
+
+    font-size:clamp(32px,10vw,60px);
+
+    color:#ff5b8a;
+
+    text-shadow:
+        0 0 15px #ff1760,
+        0 0 30px #ff1760;
+
+}
+
+#menu p{
+
+    max-width:600px;
+
+    line-height:1.5;
+
+    color:#ddd;
+
+}
+
+#start{
+
+    border:0;
+
+    border-radius:15px;
+
+    padding:15px 25px;
+
+    margin-top:15px;
+
+    background:#ff477b;
+
+    color:white;
+
+    font-size:18px;
+
+    font-weight:bold;
+
+}
+
+</style>
+</head>
+
+
+<body>
+
+<div id="game">
+
+<canvas id="canvas"></canvas>
+
+
+<div id="top">
+
+<span>
+Puntos:
+<b id="score">0</b>
+</span>
+
+<span>
+❤️
+<b id="lives">3</b>
+</span>
+
+</div>
+
+
+<button id="pause">
+Pausa
+</button>
+
+
+<div id="love">
+
+¡TE AMO! ❤️❤️
+
+<br>
+
+<span style="font-size:.55em">
+
+ERES LA MEJOR 💖
+<br>
+MIL BESOS 😘😘😘
+
+</span>
+
+</div>
+
+
+<div id="controls">
+
+<div class="controlGroup">
+
+<button
+    class="ctrl"
+    id="left">
+◀
+</button>
+
+<button
+    class="ctrl"
+    id="right">
+▶
+</button>
+
+</div>
+
+
+<button
+    class="ctrl"
+    id="fire">
+
+DISPARAR
+
+</button>
+
+</div>
+
+
+<div id="menu">
+
+<h1>
+SPACE LOVE ❤️
+</h1>
+
+<p>
+
+Destruye todos los aliens 👾.
+
+<br><br>
+
+Cada vez que destruyas uno aparecerá:
+
+<br>
+
+<b>
+TE AMO ❤️❤️
+</b>
+
+<br>
+
+<b>
+ERES LA MEJOR 💖
+</b>
+
+<br>
+
+<b>
+MIL BESOS 😘😘😘
+</b>
+
+</p>
+
+<button id="start">
+🚀 JUGAR
+</button>
+
+</div>
+
+</div>
+
+
+<script>
+
+/* =====================================================
+   👾 IMÁGENES DE LOS ALIENS
+   =====================================================
+
+   PON AQUÍ LOS LINKS DIRECTOS DE TUS IMÁGENES.
+
+   Puedes poner una o varias.
+
+   IMPORTANTE:
+   Deben ser links directos a imágenes.
+
+   Ejemplo:
+
+   const ALIEN_IMAGES = [
+       "https://tusitio.com/alien1.png",
+       "https://tusitio.com/alien2.png"
+   ];
+
+   ===================================================== */
+
+
+const ALIEN_IMAGES = [
+
+    // Pega aquí tus imágenes:
+
+    // "https://tusitio.com/imagen1.png",
+
+    // "https://tusitio.com/imagen2.png",
+
+];
+
+
+
+/* =====================================================
+   VARIABLES
+   ===================================================== */
+
+const canvas =
+document.getElementById("canvas");
+
+const ctx =
+canvas.getContext("2d");
+
+
+const scoreElement =
+document.getElementById("score");
+
+const livesElement =
+document.getElementById("lives");
+
+const loveElement =
+document.getElementById("love");
+
+
+const menu =
+document.getElementById("menu");
+
+const startButton =
+document.getElementById("start");
+
+const pauseButton =
+document.getElementById("pause");
+
+
+const leftButton =
+document.getElementById("left");
+
+const rightButton =
+document.getElementById("right");
+
+const fireButton =
+document.getElementById("fire");
+
+
+
+let W;
+let H;
+
+let playing=false;
+
+let paused=false;
+
+let score=0;
+
+let lives=3;
+
+let lastTime=0;
+
+
+let player;
+
+let bullets=[];
+
+let aliens=[];
+
+let particles=[];
+
+let stars=[];
+
+
+let alienImages=[];
+
+
+
+/* =====================================================
+   TAMAÑO DEL CANVAS
+   ===================================================== */
+
+function resizeCanvas(){
+
+    W=window.innerWidth;
+
+    H=window.innerHeight;
+
+    canvas.width=W;
+
+    canvas.height=H;
+
+}
+
+
+resizeCanvas();
+
+window.addEventListener(
+    "resize",
+    resizeCanvas
+);
+
+
+
+/* =====================================================
+   CARGAR IMÁGENES
+   ===================================================== */
+
+function loadAlienImages(){
+
+    alienImages=[];
+
+    for(
+        let i=0;
+        i<ALIEN_IMAGES.length;
+        i++
+    ){
+
+        let image=new Image();
+
+        image.src=ALIEN_IMAGES[i];
+
+        alienImages.push(image);
+
+    }
+
+}
+
+
+
+/* =====================================================
+   ESTRELLAS
+   ===================================================== */
+
+function createStars(){
+
+    stars=[];
+
+    for(
+        let i=0;
+        i<100;
+        i++
+    ){
+
+        stars.push({
+
+            x:Math.random()*W,
+
+            y:Math.random()*H,
+
+            size:Math.random()*2+0.5,
+
+            speed:Math.random()*30+10
+
+        });
+
+    }
+
+}
+
+
+createStars();
+
+
+
+/* =====================================================
+   INICIAR JUEGO
+   ===================================================== */
+
+function startGame(){
+
+    loadAlienImages();
+
+    score=0;
+
+    lives=3;
+
+    scoreElement.textContent=score;
+
+    livesElement.textContent=lives;
+
+
+    player={
+
+        x:W/2,
+
+        y:H-110,
+
+        width:50,
+
+        height:35,
+
+        speed:350,
+
+        cooldown:0
+
+    };
+
+
+    bullets=[];
+
+    aliens=[];
+
+    particles=[];
+
+
+    let columns=
+        Math.max(
+            5,
+            Math.min(
+                9,
+                Math.floor(W/65)
+            )
+        );
+
+
+    let rows=3;
+
+
+    let spacing=
+        Math.min(
+            70,
+            (W-60)/columns
+        );
+
+
+    let startX=
+        W/2 -
+        spacing*(columns-1)/2;
+
+
+    for(
+        let row=0;
+        row<rows;
+        row++
+    ){
+
+        for(
+            let column=0;
+            column<columns;
+            column++
+        ){
+
+            aliens.push({
+
+                x:
+                    startX+
+                    column*spacing,
+
+                y:
+                    110+
+                    row*55,
+
+                width:44,
+
+                height:38,
+
+                direction:1,
+
+                imageIndex:
+                    (row*columns+column)%
+                    Math.max(
+                        1,
+                        ALIEN_IMAGES.length
+                    )
+
+            });
+
+        }
+
+    }
+
+
+    playing=true;
+
+    paused=false;
+
+    pauseButton.textContent="Pausa";
+
+    menu.style.display="none";
+
+}
+
+
+
+/* =====================================================
+   DISPARAR
+   ===================================================== */
+
+function shoot(){
+
+    if(!playing){
+
+        return;
+
+    }
+
+    if(paused){
+
+        return;
+
+    }
+
+
+    if(player.cooldown>0){
+
+        return;
+
+    }
+
+
+    bullets.push({
+
+        x:player.x,
+
+        y:player.y-25,
+
+        width:5,
+
+        height:18,
+
+        speed:650
+
+    });
+
+
+    player.cooldown=.25;
+
+}
+
+
+
+/* =====================================================
+   BOTÓN DISPARAR
+   ===================================================== */
+
+/*
+
+   AQUÍ ESTÁ LA PARTE IMPORTANTE.
+
+   Se utilizan touchstart Y click.
+
+   Así funciona tanto en Android
+   como en navegador de computadora.
+
+*/
+
+
+fireButton.addEventListener(
+    "touchstart",
+    function(event){
+
+        event.preventDefault();
+
+        event.stopPropagation();
+
+        shoot();
+
+    },
+    {passive:false}
+);
+
+
+fireButton.addEventListener(
+    "click",
+    function(event){
+
+        event.preventDefault();
+
+        event.stopPropagation();
+
+        shoot();
+
+    }
+);
+
+
+
+/* =====================================================
+   BOTONES IZQUIERDA / DERECHA
+   ===================================================== */
+
+let movingLeft=false;
+
+let movingRight=false;
+
+
+
+function pressLeft(event){
+
+    event.preventDefault();
+
+    movingLeft=true;
+
+}
+
+
+function releaseLeft(event){
+
+    event.preventDefault();
+
+    movingLeft=false;
+
+}
+
+
+
+function pressRight(event){
+
+    event.preventDefault();
+
+    movingRight=true;
+
+}
+
+
+function releaseRight(event){
+
+    event.preventDefault();
+
+    movingRight=false;
+
+}
+
+
+
+/* IZQUIERDA */
+
+leftButton.addEventListener(
+    "touchstart",
+    pressLeft,
+    {passive:false}
+);
+
+leftButton.addEventListener(
+    "touchend",
+    releaseLeft,
+    {passive:false}
+);
+
+leftButton.addEventListener(
+    "touchcancel",
+    releaseLeft,
+    {passive:false}
+);
+
+
+
+/* DERECHA */
+
+rightButton.addEventListener(
+    "touchstart",
+    pressRight,
+    {passive:false}
+);
+
+rightButton.addEventListener(
+    "touchend",
+    releaseRight,
+    {passive:false}
+);
+
+rightButton.addEventListener(
+    "touchcancel",
+    releaseRight,
+    {passive:false}
+);
+
+
+
+/* =====================================================
+   TECLADO
+   ===================================================== */
+
+document.addEventListener(
+    "keydown",
+    function(event){
+
+        if(
+            event.key==="ArrowLeft" ||
+            event.key.toLowerCase()==="a"
+        ){
+
+            movingLeft=true;
+
+        }
+
+
+        if(
+            event.key==="ArrowRight" ||
+            event.key.toLowerCase()==="d"
+        ){
+
+            movingRight=true;
+
+        }
+
+
+        if(
+            event.code==="Space"
+        ){
+
+            event.preventDefault();
+
+            shoot();
+
+        }
+
+    }
+);
+
+
+
+document.addEventListener(
+    "keyup",
+    function(event){
+
+        if(
+            event.key==="ArrowLeft" ||
+            event.key.toLowerCase()==="a"
+        ){
+
+            movingLeft=false;
+
+        }
+
+
+        if(
+            event.key==="ArrowRight" ||
+            event.key.toLowerCase()==="d"
+        ){
+
+            movingRight=false;
+
+        }
+
+    }
+);
+
+
+
+/* =====================================================
+   MENÚ
+   ===================================================== */
+
+startButton.addEventListener(
+    "click",
+    startGame
+);
+
+
+
+pauseButton.addEventListener(
+    "click",
+    function(){
+
+        if(!playing){
+
+            return;
+
+        }
+
+
+        paused=!paused;
+
+
+        if(paused){
+
+            pauseButton.textContent=
+                "Continuar";
+
+        }
+        else{
+
+            pauseButton.textContent=
+                "Pausa";
+
+        }
+
+    }
+);
+
+
+
+/* =====================================================
+   EXPLOSIÓN
+   ===================================================== */
+
+function explosion(x,y){
+
+    for(
+        let i=0;
+        i<18;
+        i++
+    ){
+
+        particles.push({
+
+            x:x,
+
+            y:y,
+
+            vx:
+                (Math.random()-.5)*
+                280,
+
+            vy:
+                (Math.random()-.5)*
+                280,
+
+            life:
+                .4+
+                Math.random()*.6
+
+        });
+
+    }
+
+}
+
+
+
+/* =====================================================
+   MENSAJE DE AMOR
+   ===================================================== */
+
+function showLove(){
+
+    loveElement.classList.remove("show");
+
+    void loveElement.offsetWidth;
+
+    loveElement.classList.add("show");
+
+}
+
+
+
+/* =====================================================
+   GAME OVER
+   ===================================================== */
+
+function gameOver(){
+
+    playing=false;
+
+    menu.style.display="flex";
+
+    menu.querySelector("h1").textContent=
+        "FIN DEL JUEGO 💔";
+
+    menu.querySelector("p").innerHTML=
+        "Puntaje final: <b>"+
+        score+
+        "</b><br><br>"+
+        "Pero recuerda... ❤️";
+
+    startButton.textContent=
+        "🚀 JUGAR DE NUEVO";
+
+}
+
+
+
+/* =====================================================
+   ACTUALIZAR JUEGO
+   ===================================================== */
+
+function update(delta){
+
+    if(!playing || paused){
+
+        return;
+
+    }
+
+
+    /* JUGADOR */
+
+    if(movingLeft){
+
+        player.x -=
+            player.speed*
+            delta;
+
+    }
+
+
+    if(movingRight){
+
+        player.x +=
+            player.speed*
+            delta;
+
+    }
+
+
+    player.x=
+        Math.max(
+            30,
+            Math.min(
+                W-30,
+                player.x
+            )
+        );
+
+
+    player.cooldown=
+        Math.max(
+            0,
+            player.cooldown-delta
+        );
+
+
+
+    /* ESTRELLAS */
+
+    for(
+        let star of stars
+    ){
+
+        star.y +=
+            star.speed*
+            delta;
+
+
+        if(star.y>H){
+
+            star.y=0;
+
+            star.x=
+                Math.random()*W;
+
+        }
+
+    }
+
+
+
+    /* BALAS */
+
+    for(
+        let bullet of bullets
+    ){
+
+        bullet.y -=
+            bullet.speed*
+            delta;
+
+    }
+
+
+    bullets=
+        bullets.filter(
+            bullet=>
+                bullet.y>-30
+        );
+
+
+
+    /* ALIENS */
+
+    let speed=
+        40+
+        score*.2;
+
+
+    let changeDirection=false;
+
+
+    for(
+        let alien of aliens
+    ){
+
+        if(
+            alien.x+
+            alien.width/2
+            >=W-20 ||
+
+            alien.x-
+            alien.width/2
+            <=20
+        ){
+
+            changeDirection=true;
+
+        }
+
+    }
+
+
+    if(changeDirection){
+
+        for(
+            let alien of aliens
+        ){
+
+            alien.direction*=-1;
+
+            alien.y+=22;
+
+        }
+
+    }
+
+
+    for(
+        let alien of aliens
+    ){
+
+        alien.x +=
+            alien.direction*
+            speed*
+            delta;
+
+    }
+
+
+
+    /* COLISIONES */
+
+    for(
+        let b=bullets.length-1;
+        b>=0;
+        b--
+    ){
+
+        let bullet=
+            bullets[b];
+
+
+        for(
+            let a=aliens.length-1;
+            a>=0;
+            a--
+        ){
+
+            let alien=
+                aliens[a];
+
+
+            let collision=
+
+                Math.abs(
+                    bullet.x-alien.x
+                )
+                <
+                alien.width*.55
+
+                &&
+
+                Math.abs(
+                    bullet.y-alien.y
+                )
+                <
+                alien.height*.65;
+
+
+            if(collision){
+
+                bullets.splice(
+                    b,
+                    1
+                );
+
+                aliens.splice(
+                    a,
+                    1
+                );
+
+
+                score+=10;
+
+                scoreElement.textContent=
+                    score;
+
+
+                explosion(
+                    alien.x,
+                    alien.y
+                );
+
+
+                showLove();
+
+
+                break;
+
+            }
+
+        }
+
+    }
+
+
+
+    /* ALIENS LLEGAN AL JUGADOR */
+
+    for(
+        let alien of aliens
+    ){
+
+        if(
+            alien.y>
+            player.y-20
+        ){
+
+            gameOver();
+
+            return;
+
+        }
+
+    }
+
+
+
+    /* NIVEL TERMINADO */
+
+    if(
+        aliens.length===0
+    ){
+
+        score+=100;
+
+        scoreElement.textContent=
+            score;
+
+
+        setTimeout(
+            function(){
+
+                if(playing){
+
+                    startGame();
+
+                }
+
+            },
+            500
+        );
+
+    }
+
+
+
+    /* PARTÍCULAS */
+
+    for(
+        let particle of particles
+    ){
+
+        particle.x +=
+            particle.vx*
+            delta;
+
+        particle.y +=
+            particle.vy*
+            delta;
+
+        particle.vy +=
+            200*
+            delta;
+
+        particle.life -=
+            delta;
+
+    }
+
+
+    particles=
+        particles.filter(
+            particle=>
+                particle.life>0
+        );
+
+}
+
+
+
+/* =====================================================
+   DIBUJAR NAVE
+   ===================================================== */
+
+function drawPlayer(){
+
+    ctx.save();
+
+    ctx.translate(
+        player.x,
+        player.y
+    );
+
+
+    ctx.fillStyle=
+        "#8eeaff";
+
+    ctx.shadowColor=
+        "#33dfff";
+
+    ctx.shadowBlur=15;
+
+
+    ctx.beginPath();
+
+    ctx.moveTo(
+        0,
+        -25
+    );
+
+    ctx.lineTo(
+        27,
+        20
+    );
+
+    ctx.lineTo(
+        9,
+        14
+    );
+
+    ctx.lineTo(
+        0,
+        21
+    );
+
+    ctx.lineTo(
+        -9,
+        14
+    );
+
+    ctx.lineTo(
+        -27,
+        20
+    );
+
+    ctx.closePath();
+
+    ctx.fill();
+
+
+    ctx.shadowBlur=0;
+
+
+    ctx.fillStyle="white";
+
+    ctx.beginPath();
+
+    ctx.arc(
+        0,
+        -8,
+        5,
+        0,
+        Math.PI*2
+    );
+
+    ctx.fill();
+
+
+    ctx.restore();
+
+}
+
+
+
+/* =====================================================
+   DIBUJAR ALIEN
+   ===================================================== */
+
+function drawAlien(alien){
+
+    ctx.save();
+
+    ctx.translate(
+        alien.x,
+        alien.y
+    );
+
+
+    let image=
+        alienImages[
+            alien.imageIndex
+        ];
+
+
+    if(
+        image &&
+        image.complete &&
+        image.naturalWidth>0
+    ){
+
+        let scale=
+            Math.min(
+                alien.width/
+                    image.naturalWidth,
+
+                alien.height/
+                    image.naturalHeight
+            );
+
+
+        let width=
+            image.naturalWidth*
+            scale;
+
+        let height=
+            image.naturalHeight*
+            scale;
+
+
+        ctx.drawImage(
+            image,
+            -width/2,
+            -height/2,
+            width,
+            height
+        );
+
+    }
+
+    else{
+
+        /* ALIEN POR DEFECTO */
+
+        ctx.fillStyle=
+            "#72ff7a";
+
+        ctx.shadowColor=
+            "#40ff55";
+
+        ctx.shadowBlur=10;
+
+
+        ctx.fillRect(
+            -18,
+            -12,
+            36,
+            24
+        );
+
+
+        ctx.fillRect(
+            -25,
+            -5,
+            7,
+            13
+        );
+
+
+        ctx.fillRect(
+            18,
+            -5,
+            7,
+            13
+        );
+
+
+        ctx.shadowBlur=0;
+
+
+        ctx.fillStyle=
+            "#07100a";
+
+
+        ctx.fillRect(
+            -10,
+            -6,
+            6,
+            6
+        );
+
+
+        ctx.fillRect(
+            4,
+            -6,
+            6,
+            6
+        );
+
+    }
+
+
+    ctx.restore();
+
+}
+
+
+
+/* =====================================================
+   DIBUJAR TODO
+   ===================================================== */
+
+function draw(){
+
+    ctx.clearRect(
+        0,
+        0,
+        W,
+        H
+    );
+
+
+    /* ESTRELLAS */
+
+    for(
+        let star of stars
+    ){
+
+        ctx.globalAlpha=.4;
+
+        ctx.fillStyle="white";
+
+        ctx.fillRect(
+            star.x,
+            star.y,
+            star.size,
+            star.size
+        );
+
+    }
+
+
+    ctx.globalAlpha=1;
+
+
+    if(!player){
+
+        return;
+
+    }
+
+
+    /* NAVE */
+
+    drawPlayer();
+
+
+    /* ALIENS */
+
+    for(
+        let alien of aliens
+    ){
+
+        drawAlien(alien);
+
+    }
+
+
+    /* BALAS */
+
+    ctx.fillStyle=
+        "#fff16a";
+
+    ctx.shadowColor=
+        "#fff16a";
+
+    ctx.shadowBlur=12;
+
+
+    for(
+        let bullet of bullets
+    ){
+
+        ctx.fillRect(
+
+            bullet.x-
+            bullet.width/2,
+
+            bullet.y,
+
+            bullet.width,
+
+            bullet.height
+
+        );
+
+    }
+
+
+    ctx.shadowBlur=0;
+
+
+    /* EXPLOSIONES */
+
+    for(
+        let particle of particles
+    ){
+
+        ctx.globalAlpha=
+            Math.max(
+                0,
+                particle.life
+            );
+
+        ctx.fillStyle=
+            "#ff5b8a";
+
+
+        ctx.fillRect(
+            particle.x,
+            particle.y,
+            5,
+            5
+        );
+
+    }
+
+
+    ctx.globalAlpha=1;
+
+}
+
+
+
+/* =====================================================
+   BUCLE PRINCIPAL
+   ===================================================== */
+
+function gameLoop(time){
+
+    let delta=
+        (time-lastTime)/1000;
+
+
+    lastTime=time;
+
+
+    delta=
+        Math.min(
+            delta,
+            .033
+        );
+
+
+    update(delta);
+
+    draw();
+
+
+    requestAnimationFrame(
+        gameLoop
+    );
+
+}
+
+
+requestAnimationFrame(
+    gameLoop
+);
+
+</script>
+
+</body>
+</html>
