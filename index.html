@@ -11,16 +11,21 @@
                maximum-scale=1.0,
                user-scalable=no">
 
-<title>jueguito para mi novia hermosa ❤️</title>
+<title>Jueguito para mi novia hermosa ❤️</title>
 
 <style>
+
+/* =====================================================
+   CONFIGURACIÓN GENERAL
+   ===================================================== */
 
 *{
     box-sizing:border-box;
     -webkit-tap-highlight-color:transparent;
 }
 
-html,body{
+html,
+body{
     margin:0;
     padding:0;
     width:100%;
@@ -54,11 +59,17 @@ canvas{
     display:block;
 }
 
+
+/* =====================================================
+   INFORMACIÓN SUPERIOR
+   ===================================================== */
+
 #top{
     position:absolute;
     top:12px;
     left:0;
     width:100%;
+
     padding:0 15px;
 
     display:flex;
@@ -70,16 +81,24 @@ canvas{
 
     z-index:10;
     pointer-events:none;
+
+    text-shadow:0 2px 5px #000;
 }
+
+
+/* =====================================================
+   BOTÓN PAUSA
+   ===================================================== */
 
 #pause{
     position:absolute;
+
     top:45px;
     right:12px;
 
     z-index:20;
 
-    border:0;
+    border:1px solid #ffffff33;
     border-radius:10px;
 
     padding:8px 13px;
@@ -92,13 +111,20 @@ canvas{
     touch-action:manipulation;
 }
 
+
+/* =====================================================
+   MENSAJE GRANDE DE AMOR
+   ===================================================== */
+
 #love{
     position:absolute;
 
     left:50%;
     top:42%;
 
-    transform:translate(-50%,-50%) scale(.5);
+    transform:
+        translate(-50%,-50%)
+        scale(.5);
 
     width:95%;
 
@@ -113,7 +139,8 @@ canvas{
 
     text-shadow:
         0 0 10px #ff1760,
-        0 0 25px #ff1760;
+        0 0 25px #ff1760,
+        0 0 45px #ff1760;
 
     opacity:0;
 
@@ -123,32 +150,57 @@ canvas{
 }
 
 #love.show{
-    animation:loveAnimation .9s ease-out;
+    animation:loveAnimation 2.5s ease-out forwards;
 }
 
 @keyframes loveAnimation{
 
     0%{
         opacity:0;
-        transform:translate(-50%,-50%) scale(.4);
+
+        transform:
+            translate(-50%,-50%)
+            scale(.4);
     }
 
-    20%{
+    15%{
         opacity:1;
-        transform:translate(-50%,-50%) scale(1.15);
+
+        transform:
+            translate(-50%,-50%)
+            scale(1.12);
     }
 
-    70%{
+    35%{
         opacity:1;
-        transform:translate(-50%,-50%) scale(1);
+
+        transform:
+            translate(-50%,-50%)
+            scale(1);
+    }
+
+    80%{
+        opacity:1;
+
+        transform:
+            translate(-50%,-50%)
+            scale(1);
     }
 
     100%{
         opacity:0;
-        transform:translate(-50%,-50%) scale(1.05);
+
+        transform:
+            translate(-50%,-50%)
+            scale(1.05);
     }
 
 }
+
+
+/* =====================================================
+   CONTROLES
+   ===================================================== */
 
 #controls{
     position:absolute;
@@ -203,6 +255,11 @@ canvas{
     background:#ffffff35;
 }
 
+
+/* =====================================================
+   BOTÓN DISPARAR
+   ===================================================== */
+
 #fire{
     width:110px;
 
@@ -225,8 +282,14 @@ canvas{
         0 0 25px #ff477b;
 }
 
+
+/* =====================================================
+   MENÚ PRINCIPAL
+   ===================================================== */
+
 #menu{
     position:absolute;
+
     inset:0;
 
     z-index:50;
@@ -244,7 +307,9 @@ canvas{
 
     color:white;
 
-    background:#03030ddd;
+    background:#03030ded;
+
+    overflow-y:auto;
 }
 
 #menu h1{
@@ -267,7 +332,13 @@ canvas{
     color:#ddd;
 }
 
-#start{
+
+/* =====================================================
+   BOTONES DEL MENÚ
+   ===================================================== */
+
+.menuButton{
+
     border:0;
 
     border-radius:15px;
@@ -285,6 +356,267 @@ canvas{
     font-weight:bold;
 
     touch-action:manipulation;
+
+    box-shadow:
+        0 5px 20px #ff477b55;
+}
+
+.menuButton:active{
+    transform:scale(.94);
+}
+
+
+/* =====================================================
+   BOTÓN DE MÚSICA
+   ===================================================== */
+
+#musicButton{
+
+    background:#7b4dff;
+
+    box-shadow:
+        0 5px 20px #7b4dff55;
+}
+
+
+/* =====================================================
+   BOTÓN DEL MENSAJE ESPECIAL
+   ===================================================== */
+
+#messageButton{
+
+    background:
+        linear-gradient(
+            135deg,
+            #ff477b,
+            #ff78a5
+        );
+
+    box-shadow:
+        0 5px 25px #ff477b66;
+}
+
+
+/* =====================================================
+   MODAL DEL MENSAJE ❤️
+   ===================================================== */
+
+#messageBox{
+
+    position:absolute;
+
+    inset:0;
+
+    z-index:100;
+
+    display:none;
+
+    justify-content:center;
+    align-items:center;
+
+    padding:20px;
+
+    background:#000000cc;
+
+}
+
+#messageCard{
+
+    width:min(92vw,500px);
+
+    max-height:85vh;
+
+    overflow-y:auto;
+
+    padding:30px 22px;
+
+    border-radius:25px;
+
+    text-align:center;
+
+    color:white;
+
+    background:
+        linear-gradient(
+            145deg,
+            #ff477b,
+            #8e2de2
+        );
+
+    box-shadow:
+        0 0 40px #ff477b99;
+
+    animation:
+        messageAppear .5s ease;
+}
+
+@keyframes messageAppear{
+
+    from{
+        opacity:0;
+        transform:scale(.7);
+    }
+
+    to{
+        opacity:1;
+        transform:scale(1);
+    }
+
+}
+
+#messageCard h2{
+
+    margin-top:0;
+
+    font-size:30px;
+
+    text-shadow:
+        0 2px 8px #0005;
+}
+
+#messageCard p{
+
+    font-size:17px;
+
+    line-height:1.7;
+
+    text-shadow:
+        0 1px 3px #0005;
+}
+
+#closeMessage{
+
+    border:0;
+
+    border-radius:12px;
+
+    padding:12px 22px;
+
+    margin-top:10px;
+
+    background:white;
+
+    color:#ff477b;
+
+    font-weight:bold;
+
+    font-size:16px;
+}
+
+
+/* =====================================================
+   BARRA DE VIDA DEL JUGADOR
+   ===================================================== */
+
+#lifeWarning{
+
+    position:absolute;
+
+    left:50%;
+
+    top:75px;
+
+    transform:translateX(-50%);
+
+    color:#ff5b8a;
+
+    font-weight:bold;
+
+    font-size:14px;
+
+    opacity:0;
+
+    z-index:15;
+
+    pointer-events:none;
+
+    text-shadow:
+        0 0 8px #ff1760;
+}
+
+#lifeWarning.show{
+
+    animation:
+        warningAnimation .7s ease;
+}
+
+@keyframes warningAnimation{
+
+    0%{
+        opacity:0;
+        transform:
+            translateX(-50%)
+            scale(.7);
+    }
+
+    50%{
+        opacity:1;
+        transform:
+            translateX(-50%)
+            scale(1.1);
+    }
+
+    100%{
+        opacity:0;
+        transform:
+            translateX(-50%)
+            scale(1);
+    }
+
+}
+
+
+/* =====================================================
+   PAUSA
+   ===================================================== */
+
+#pauseScreen{
+
+    position:absolute;
+
+    inset:0;
+
+    z-index:40;
+
+    display:none;
+
+    justify-content:center;
+    align-items:center;
+
+    background:#00000099;
+
+    color:white;
+
+    text-align:center;
+}
+
+#pauseScreen h2{
+
+    font-size:40px;
+
+    color:#ff5b8a;
+}
+
+
+/* =====================================================
+   RESPONSIVE
+   ===================================================== */
+
+@media(max-height:600px){
+
+    #controls{
+        bottom:8px;
+    }
+
+    .ctrl{
+        height:52px;
+        width:62px;
+    }
+
+    #fire{
+        width:100px;
+    }
+
 }
 
 </style>
@@ -299,109 +631,258 @@ canvas{
 <canvas id="canvas"></canvas>
 
 
+<!-- =====================================================
+     AUDIO
+     ===================================================== -->
+
+<audio
+    id="music"
+    src="AUD-20260316-WA0060.mp3"
+    loop
+    preload="auto">
+</audio>
+
+
+<!-- =====================================================
+     INFORMACIÓN
+     ===================================================== -->
+
 <div id="top">
 
-<span>
-Puntos:
-<b id="score">0</b>
-</span>
+    <span>
+        Puntos:
+        <b id="score">0</b>
+    </span>
 
-<span>
-❤️
-<b id="lives">3</b>
-</span>
+    <span>
+        ❤️
+        <b id="lives">3</b>
+    </span>
 
 </div>
 
 
-<button id="pause">
-Pausa
+<button
+    type="button"
+    id="pause">
+    Pausa
 </button>
 
+
+<!-- =====================================================
+     MENSAJE DURANTE EL JUEGO
+     ===================================================== -->
 
 <div id="love">
 
-¡TE AMO! ❤️❤️
+    ¡TE AMO! ❤️❤️
 
-<br>
+    <br>
 
-<span style="font-size:.55em">
+    <span style="font-size:.55em">
 
-ERES LA MEJOR 💖
-<br>
-MIL BESOS 😘😘😘
+        ERES LA MEJOR 💖
+        <br>
+        MIL BESOS 😘😘😘
 
-</span>
+    </span>
 
 </div>
 
+
+<div id="lifeWarning">
+    ❤️ ¡CUIDADO! TE QUEDA UNA VIDA ❤️
+</div>
+
+
+<!-- =====================================================
+     CONTROLES
+     ===================================================== -->
 
 <div id="controls">
 
-<div class="controlGroup">
+    <div class="controlGroup">
 
-<button
-    type="button"
-    class="ctrl"
-    id="left">
-◀
-</button>
+        <button
+            type="button"
+            class="ctrl"
+            id="left">
+            ◀
+        </button>
 
-<button
-    type="button"
-    class="ctrl"
-    id="right">
-▶
-</button>
+        <button
+            type="button"
+            class="ctrl"
+            id="right">
+            ▶
+        </button>
+
+    </div>
+
+
+    <button
+        type="button"
+        class="ctrl"
+        id="fire">
+
+        🔫
+        DISPARAR
+
+    </button>
 
 </div>
 
 
-<button
-    type="button"
-    class="ctrl"
-    id="fire">
-DISPARAR
-</button>
+<!-- =====================================================
+     PANTALLA DE PAUSA
+     ===================================================== -->
+
+<div id="pauseScreen">
+
+    <div>
+
+        <h2>
+            PAUSA ⏸️
+        </h2>
+
+        <p>
+            Descansa tantito mi amor ❤️
+        </p>
+
+    </div>
 
 </div>
 
+
+<!-- =====================================================
+     MENSAJE ESPECIAL
+     ===================================================== -->
+
+<div id="messageBox">
+
+    <div id="messageCard">
+
+        <h2>
+            💌 Para ti, mi niña hermosa 💌
+        </h2>
+
+        <p>
+
+            La verdad eres lo mejor
+            que me ha pasado ❤️
+
+            <br><br>
+
+            Eres mi todo 💖
+
+            <br><br>
+
+            Muchas gracias por todo
+            este tiempo, mi vida ❤️🥹❤️
+
+            <br><br>
+
+            Gracias por cada momento,
+            cada sonrisa, cada abrazo
+            y cada recuerdo que hemos
+            creado juntos.
+
+            <br><br>
+
+            Quiero seguir viviendo
+            muchísimos momentos más
+            contigo.
+
+            <br><br>
+
+            Te amo muchísimo,
+            Liss. ❤️
+
+            <br><br>
+
+            Para siempre tú y yo. 💖♾️
+
+            <br><br>
+
+            😘😘😘😘😘
+
+        </p>
+
+        <button
+            type="button"
+            id="closeMessage">
+
+            ❤️ CERRAR
+
+        </button>
+
+    </div>
+
+</div>
+
+
+<!-- =====================================================
+     MENÚ
+     ===================================================== -->
 
 <div id="menu">
 
-<h1>
-TE AMOO ❤️
-</h1>
+    <h1>
+        TE AMOO ❤️
+    </h1>
 
-<p>
 
-Destruye todos los aliens 👾.
+    <p id="menuText">
 
-<br><br>
+        Destruye todos los aliens 👾.
 
-feliz aniversario mi niñaaaaa
+        <br><br>
 
-<br>
+        feliz aniversario mi niñaaaaa
 
-<b>TE AMO ❤️❤️</b>
+        <br>
 
-<br>
+        <b>TE AMO ❤️❤️</b>
 
-<b>ERES LA MEJOR 💖</b>
+        <br>
 
-<br>
+        <b>ERES LA MEJOR 💖</b>
 
-<b>MIL BESOS 😘😘😘</b>
+        <br>
 
-</p>
+        <b>MIL BESOS 😘😘😘</b>
 
-<button
-    type="button"
-    id="start">
-🚀 JUGAR
-</button>
+    </p>
 
-</div>
+
+    <button
+        type="button"
+        class="menuButton"
+        id="start">
+
+        🚀 JUGAR
+
+    </button>
+
+
+    <button
+        type="button"
+        class="menuButton"
+        id="musicButton">
+
+        🎵 REPRODUCIR MÚSICA
+
+    </button>
+
+
+    <button
+        type="button"
+        class="menuButton"
+        id="messageButton">
+
+        💌 MENSAJE PARA TI
+
+    </button>
 
 </div>
 
@@ -416,10 +897,10 @@ feliz aniversario mi niñaaaaa
 const ALIEN_IMAGES = [
 
     /*
-       Pega aquí tus imágenes:
+        PEGA AQUÍ TUS LINKS:
 
-       "https://tusitio.com/alien1.png",
-       "https://tusitio.com/alien2.png"
+        "https://tusitio.com/alien1.png",
+        "https://tusitio.com/alien2.png"
 
     */
 
@@ -494,7 +975,7 @@ const LOVE_PHRASES = [
 
 
 /* =====================================================
-   VARIABLES
+   ELEMENTOS
    ===================================================== */
 
 const canvas =
@@ -513,15 +994,24 @@ const livesElement =
 const loveElement =
     document.getElementById("love");
 
+const lifeWarning =
+    document.getElementById("lifeWarning");
+
 
 const menu =
     document.getElementById("menu");
+
+const menuText =
+    document.getElementById("menuText");
 
 const startButton =
     document.getElementById("start");
 
 const pauseButton =
     document.getElementById("pause");
+
+const pauseScreen =
+    document.getElementById("pauseScreen");
 
 
 const leftButton =
@@ -534,6 +1024,27 @@ const fireButton =
     document.getElementById("fire");
 
 
+const music =
+    document.getElementById("music");
+
+const musicButton =
+    document.getElementById("musicButton");
+
+
+const messageButton =
+    document.getElementById("messageButton");
+
+const messageBox =
+    document.getElementById("messageBox");
+
+const closeMessage =
+    document.getElementById("closeMessage");
+
+
+/* =====================================================
+   VARIABLES
+   ===================================================== */
+
 let W = 0;
 let H = 0;
 
@@ -541,6 +1052,7 @@ let playing = false;
 let paused = false;
 
 let score = 0;
+
 let lives = 3;
 
 let lastTime = 0;
@@ -548,47 +1060,58 @@ let lastTime = 0;
 let player = null;
 
 let bullets = [];
+
 let aliens = [];
+
 let particles = [];
+
 let stars = [];
 
 let alienImages = [];
 
 let movingLeft = false;
+
 let movingRight = false;
 
-let levelStarting = false;
+
+/*
+   IMPORTANTE:
+
+   Ya NO existe ningún:
+
+   boss
+   bossActive
+   createBoss
+   bossMessage
+
+   El jefe fue eliminado completamente.
+*/
 
 
 /* =====================================================
-   VARIABLES DEL JEFE 👑
-   ===================================================== */
-
-let boss = null;
-
-let bossActive = true;
-
-let bossMessageActive = true;
-
-
-/* =====================================================
-   TAMAÑO DEL CANVAS
+   REDIMENSIONAR CANVAS
    ===================================================== */
 
 function resizeCanvas(){
 
-    W = window.innerWidth;
+    W =
+        window.innerWidth;
 
-    H = window.innerHeight;
+    H =
+        window.innerHeight;
 
-    canvas.width = W;
 
-    canvas.height = H;
+    canvas.width =
+        W;
+
+    canvas.height =
+        H;
 
 
     if(player){
 
-        player.y = H - 110;
+        player.y =
+            H - 110;
 
     }
 
@@ -618,21 +1141,25 @@ function loadAlienImages(){
         i++
     ){
 
-        const image = new Image();
+        const image =
+            new Image();
 
 
-        image.onload = function(){
+        image.onload =
+            function(){
 
-            draw();
+                draw();
 
-        };
+            };
 
 
         image.src =
             ALIEN_IMAGES[i];
 
 
-        alienImages.push(image);
+        alienImages.push(
+            image
+        );
 
     }
 
@@ -640,7 +1167,7 @@ function loadAlienImages(){
 
 
 /* =====================================================
-   ESTRELLAS
+   CREAR ESTRELLAS
    ===================================================== */
 
 function createStars(){
@@ -675,9 +1202,6 @@ function createStars(){
 }
 
 
-createStars();
-
-
 /* =====================================================
    CREAR ALIENS
    ===================================================== */
@@ -709,7 +1233,8 @@ function createAliens(){
 
     const startX =
         W / 2 -
-        spacing * (columns - 1) / 2;
+        spacing *
+        (columns - 1) / 2;
 
 
     for(
@@ -728,17 +1253,39 @@ function createAliens(){
 
                 x:
                     startX +
-                    column * spacing,
+                    column *
+                    spacing,
 
                 y:
                     110 +
-                    row * 55,
+                    row *
+                    55,
 
                 width:44,
 
                 height:38,
 
                 direction:1,
+
+                /*
+                   Velocidad horizontal.
+                   Un poco más rápida que antes.
+                */
+
+                speed:
+                    55,
+
+                /*
+                   MUY IMPORTANTE:
+
+                   Los aliens ya no bajan
+                   de golpe.
+
+                   Ahora bajan únicamente
+                   cuando cambian de dirección.
+                */
+
+                dropDistance:22,
 
                 imageIndex:
                     ALIEN_IMAGES.length > 0
@@ -796,7 +1343,9 @@ function startGame(){
 
         speed:380,
 
-        cooldown:0
+        cooldown:0,
+
+        invulnerable:0
 
     };
 
@@ -808,17 +1357,7 @@ function startGame(){
 
     movingLeft = false;
 
-    movingRight = false;
-
-
-    levelStarting = false;
-
-
-    boss = null;
-
-    bossActive = false;
-
-    bossMessageActive = false;
+      movingRight = false;
 
 
     createAliens();
@@ -829,61 +1368,48 @@ function startGame(){
     paused = false;
 
 
-    pauseButton.textContent =
-        "Pausa";
+    pauseButton.textContent = "Pausa";
+
+    pauseScreen.style.display = "none";
+
+    menu.style.display = "none";
 
 
-    menu.style.display =
-        "none";
+    lastTime = performance.now();
 
 }
 
-
-/* =====================================================
-   DISPARAR 🚀
+      /* =====================================================
+   DISPARAR
    ===================================================== */
 
 function shoot(){
 
-    if(!playing){
-        return;
-    }
+    if(!playing) return;
 
+    if(paused) return;
 
-    if(paused){
-        return;
-    }
+    if(!player) return;
 
-
-    if(!player){
-        return;
-    }
-
-
-    if(player.cooldown > 0){
-        return;
-    }
+    if(player.cooldown > 0) return;
 
 
     bullets.push({
 
-        x:
-            player.x,
+        x: player.x,
 
-        y:
-            player.y - 30,
+        y: player.y - 30,
 
-        width:6,
+        width: 6,
 
-        height:20,
+        height: 20,
 
-        speed:720
+        speed: 720
 
     });
 
 
-    player.cooldown =
-        .18;
+    player.cooldown = 0.18;
 
 }
 
@@ -892,413 +1418,473 @@ function shoot(){
    BOTÓN DISPARAR
    ===================================================== */
 
+function firePressed(event){
+
+    event.preventDefault();
+
+    event.stopPropagation();
+
+    shoot();
+
+}
+
+
 fireButton.addEventListener(
     "pointerdown",
-    function(event){
+    firePressed
+);
 
-        event.preventDefault();
+      /* =====================================================
+   MOVIMIENTO DEL JUGADOR
+   ===================================================== */
 
-        event.stopPropagation();
+function movePlayer(direction){
+
+    if(!playing) return;
+
+    if(paused) return;
+
+    if(!player) return;
+
+
+    player.x += direction * player.speed * 0.016;
+
+
+    if(player.x < player.width / 2){
+
+        player.x = player.width / 2;
+
+    }
+
+
+    if(player.x > W - player.width / 2){
+
+        player.x = W - player.width / 2;
+
+    }
+
+}
+
+      /* =====================================================
+   CONTROLES IZQUIERDA / DERECHA
+   ===================================================== */
+
+let movingLeft = false;
+let movingRight = false;
+
+
+leftButton.addEventListener("pointerdown", function(e){
+
+    e.preventDefault();
+
+    movingLeft = true;
+
+});
+
+
+leftButton.addEventListener("pointerup", function(e){
+
+    e.preventDefault();
+
+    movingLeft = false;
+
+});
+
+
+leftButton.addEventListener("pointercancel", function(){
+
+    movingLeft = false;
+
+});
+
+
+rightButton.addEventListener("pointerdown", function(e){
+
+    e.preventDefault();
+
+    movingRight = true;
+
+});
+
+
+rightButton.addEventListener("pointerup", function(e){
+
+    e.preventDefault();
+
+    movingRight = false;
+
+});
+
+
+rightButton.addEventListener("pointercancel", function(){
+
+    movingRight = false;
+
+});
+
+      /* =====================================================
+   TECLADO
+   ===================================================== */
+
+document.addEventListener("keydown", function(e){
+
+    if(e.key === "ArrowLeft" || e.key.toLowerCase() === "a"){
+
+        movingLeft = true;
+
+    }
+
+
+    if(e.key === "ArrowRight" || e.key.toLowerCase() === "d"){
+
+        movingRight = true;
+
+    }
+
+
+    if(e.code === "Space"){
+
+        e.preventDefault();
 
         shoot();
 
     }
-);
+
+});
 
 
-fireButton.addEventListener(
-    "click",
-    function(event){
+document.addEventListener("keyup", function(e){
 
-        event.preventDefault();
-
-    }
-);
-
-
-/* =====================================================
-   IZQUIERDA
-   ===================================================== */
-
-function startMoveLeft(event){
-
-    event.preventDefault();
-
-    movingLeft = true;
-
-
-    try{
-
-        leftButton.setPointerCapture(
-            event.pointerId
-        );
-
-    }
-    catch(error){}
-
-}
-
-
-function stopMoveLeft(event){
-
-    event.preventDefault();
-
-    movingLeft = false;
-
-}
-
-
-leftButton.addEventListener(
-    "pointerdown",
-    startMoveLeft
-);
-
-
-leftButton.addEventListener(
-    "pointerup",
-    stopMoveLeft
-);
-
-
-leftButton.addEventListener(
-    "pointercancel",
-    stopMoveLeft
-);
-
-
-leftButton.addEventListener(
-    "lostpointercapture",
-    function(){
+    if(e.key === "ArrowLeft" || e.key.toLowerCase() === "a"){
 
         movingLeft = false;
 
     }
-);
 
 
-/* =====================================================
-   DERECHA
-   ===================================================== */
-
-function startMoveRight(event){
-
-    event.preventDefault();
-
-    movingRight = true;
-
-
-    try{
-
-        rightButton.setPointerCapture(
-            event.pointerId
-        );
-
-    }
-    catch(error){}
-
-}
-
-
-function stopMoveRight(event){
-
-    event.preventDefault();
-
-    movingRight = false;
-
-}
-
-
-rightButton.addEventListener(
-    "pointerdown",
-    startMoveRight
-);
-
-
-rightButton.addEventListener(
-    "pointerup",
-    stopMoveRight
-);
-
-
-rightButton.addEventListener(
-    "pointercancel",
-    stopMoveRight
-);
-
-
-rightButton.addEventListener(
-    "lostpointercapture",
-    function(){
+    if(e.key === "ArrowRight" || e.key.toLowerCase() === "d"){
 
         movingRight = false;
 
     }
-);
 
-
-/* =====================================================
-   TECLADO
+});
+      /* =====================================================
+   MOVIMIENTO CONTINUO
    ===================================================== */
 
-document.addEventListener(
-    "keydown",
-    function(event){
+function updatePlayer(dt){
 
-        if(
-            event.key === "ArrowLeft" ||
-            event.key.toLowerCase() === "a"
-        ){
+    if(!player) return;
 
-            movingLeft = true;
+    if(movingLeft){
 
-        }
+        player.x -= player.speed * dt;
 
+    }
 
-        if(
-            event.key === "ArrowRight" ||
-            event.key.toLowerCase() === "d"
-        ){
+    if(movingRight){
 
-            movingRight = true;
+        player.x += player.speed * dt;
 
-        }
+    }
 
 
-        if(event.code === "Space"){
+    if(player.x < player.width / 2){
 
-            event.preventDefault();
+        player.x = player.width / 2;
 
-            shoot();
+    }
+
+    if(player.x > W - player.width / 2){
+
+        player.x = W - player.width / 2;
+
+    }
+
+
+    if(player.cooldown > 0){
+
+        player.cooldown -= dt;
+
+    }
+
+    if(player.invulnerable > 0){
+
+        player.invulnerable -= dt;
+
+    }
+
+}
+      /* =====================================================
+   CREAR ALIENS
+   ===================================================== */
+
+function createAliens(){
+
+    aliens = [];
+
+    const rows = 3;
+
+    const cols = Math.min(
+        8,
+        Math.max(5, Math.floor(W / 70))
+    );
+
+    const spacingX = W / (cols + 1);
+
+    for(let row = 0; row < rows; row++){
+
+        for(let col = 0; col < cols; col++){
+
+            aliens.push({
+
+                x: spacingX * (col + 1),
+
+                y: 90 + row * 55,
+
+                width: 38,
+
+                height: 32,
+
+                alive: true
+
+            });
 
         }
 
     }
-);
 
+    alienDirection = 1;
 
-document.addEventListener(
-    "keyup",
-    function(event){
+    alienSpeed = 70;
 
-        if(
-            event.key === "ArrowLeft" ||
-            event.key.toLowerCase() === "a"
-        ){
+    alienDrop = 22;
 
-            movingLeft = false;
-
-        }
-
-
-        if(
-            event.key === "ArrowRight" ||
-            event.key.toLowerCase() === "d"
-        ){
-
-            movingRight = false;
-
-        }
-
-    }
-);
-
-
-/* =====================================================
-   MENÚ
+}
+      /* =====================================================
+   MOVIMIENTO DE LOS ALIENS
    ===================================================== */
 
-startButton.addEventListener(
-    "pointerdown",
-    function(event){
+function updateAliens(dt){
 
-        event.preventDefault();
+    if(!aliens || aliens.length === 0) return;
 
-        startGame();
+    let leftEdge = Infinity;
+    let rightEdge = -Infinity;
 
-    }
-);
+    aliens.forEach(alien => {
 
+        if(!alien.alive) return;
 
-/* =====================================================
-   PAUSA
-   ===================================================== */
+        leftEdge = Math.min(
+            leftEdge,
+            alien.x - alien.width / 2
+        );
 
-pauseButton.addEventListener(
-    "click",
-    function(){
+        rightEdge = Math.max(
+            rightEdge,
+            alien.x + alien.width / 2
+        );
 
-        if(!playing){
-            return;
-        }
-
-
-        paused =
-            !paused;
+    });
 
 
-        pauseButton.textContent =
-            paused
-            ?
-            "Continuar"
-            :
-            "Pausa";
-
-    }
-);
+    let hitEdge = false;
 
 
-/* =====================================================
-   EXPLOSIÓN
-   ===================================================== */
-
-function explosion(x,y){
-
-    for(
-        let i = 0;
-        i < 20;
-        i++
+    if(
+        rightEdge >= W - 10 &&
+        alienDirection > 0
     ){
 
-        particles.push({
+        hitEdge = true;
 
-            x:x,
+    }
 
-            y:y,
 
-            vx:
-                (Math.random() - .5) *
-                320,
+    if(
+        leftEdge <= 10 &&
+        alienDirection < 0
+    ){
 
-            vy:
-                (Math.random() - .5) *
-                320,
+        hitEdge = true;
 
-            life:
-                .4 +
-                Math.random() * .6
+    }
+
+
+    if(hitEdge){
+
+        alienDirection *= -1;
+
+
+        aliens.forEach(alien => {
+
+            if(alien.alive){
+
+                alien.y += alienDrop;
+
+            }
 
         });
 
     }
 
-}
 
+    aliens.forEach(alien => {
 
-/* =====================================================
-   FRASE DE AMOR ❤️
-   ===================================================== */
+        if(!alien.alive) return;
 
-function showLove(){
+        alien.x +=
+            alienDirection *
+            alienSpeed *
+            dt;
 
-    const randomIndex =
-        Math.floor(
-            Math.random() *
-            LOVE_PHRASES.length
-        );
-
-
-    loveElement.innerHTML =
-        LOVE_PHRASES[randomIndex];
-
-
-    loveElement.classList.remove(
-        "show"
-    );
-
-
-    void loveElement.offsetWidth;
-
-
-    loveElement.classList.add(
-        "show"
-    );
+    });
 
 }
-
-
-/* =====================================================
-   MENSAJE DEL JEFE ❤️
+      /* =====================================================
+   PERDER UNA VIDA
    ===================================================== */
 
-function showBossLove(){
+function loseLife(){
 
-    bossMessageActive = true;
+    if(!playing) return;
 
-
-    loveElement.innerHTML =
-
-        "❤️❤️❤️<br>" +
-
-        "<span style='font-size:.65em'>" +
-
-        "LA VERDAD ERES LO MEJOR<br>" +
-
-        "QUE ME HA PASADO ❤️<br><br>" +
-
-        "ERES MI TODO 💖<br><br>" +
-
-        "MUCHAS GRACIAS POR TODO<br>" +
-
-        "ESTE TIEMPO, MI VIDA ❤️🥹❤️" +
-
-        "</span>" +
-
-        "<br>❤️❤️❤️";
+    if(player.invulnerable > 0) return;
 
 
-    loveElement.classList.remove(
-        "show"
-    );
+    lives--;
+
+    livesElement.textContent = lives;
 
 
-    void loveElement.offsetWidth;
+    if(lives <= 0){
+
+        gameOver();
+
+        return;
+
+    }
 
 
-    loveElement.classList.add(
-        "show"
-    );
+    player.x = W / 2;
+
+    player.y = H - 110;
+
+    player.invulnerable = 1.5;
+
+
+    love.textContent = "💔 ¡CUIDADO! 💔";
+
+
+    setTimeout(() => {
+
+        if(playing){
+
+            love.textContent =
+                "TE AMO ❤️ ERES LA MEJOR 😘 MIL BESOS 💋";
+
+        }
+
+    }, 1000);
 
 }
 
-
-/* =====================================================
-   CREAR JEFE 👑
+      /* =====================================================
+   ACTUALIZAR BALAS
    ===================================================== */
 
-function createBoss(){
+function updateBullets(dt){
 
-    boss = {
+    bullets.forEach(bullet => {
 
-        x:
-            W / 2,
+        bullet.y -= bullet.speed * dt;
 
-        y:
-            120,
-
-        width:
-            100,
-
-        height:
-            80,
-
-        health:
-            20,
-
-        maxHealth:
-            20,
-
-        direction:
-            1,
-
-        speed:
-            100
-
-    };
+    });
 
 
-    bossActive = true;
-      }
+    bullets = bullets.filter(bullet => {
 
+        return bullet.y + bullet.height > 0;
+
+    });
+
+}
+      /* =====================================================
+   COLISIÓN ALIEN / JUGADOR
+   ===================================================== */
+
+function checkPlayerCollisions(){
+
+    if(!player) return;
+
+    if(player.invulnerable > 0) return;
+
+
+    for(const alien of aliens){
+
+        if(!alien.alive) continue;
+
+
+        const hit =
+
+            player.x - player.width / 2 <
+            alien.x + alien.width / 2 &&
+
+            player.x + player.width / 2 >
+            alien.x - alien.width / 2 &&
+
+            player.y - player.height / 2 <
+            alien.y + alien.height / 2 &&
+
+            player.y + player.height / 2 >
+            alien.y - alien.height / 2;
+
+
+        if(hit){
+
+            alien.alive = false;
+
+            loseLife();
+
+            break;
+
+        }
+
+    }
+
+}
+      /* =====================================================
+   ALIENS LLEGAN A LA ZONA DEL JUGADOR
+   ===================================================== */
+
+function checkAlienBottom(){
+
+    if(!playing) return;
+
+
+    for(const alien of aliens){
+
+        if(!alien.alive) continue;
+
+
+        if(
+            alien.y + alien.height / 2 >=
+            player.y - player.height / 2
+        ){
+
+            loseLife();
+
+            alien.y = 80;
+
+            break;
+
+        }
+
+    }
+
+}
       /* =====================================================
    GAME OVER
    ===================================================== */
@@ -1308,1005 +1894,167 @@ function gameOver(){
     playing = false;
 
     movingLeft = false;
+
     movingRight = false;
 
-    boss = null;
-    bossActive = false;
+
+    if(music){
+
+        music.pause();
+
+    }
+
+
+    love.textContent =
+        "GAME OVER 😩";
+
 
     menu.style.display = "flex";
 
-    menu.querySelector("h1").textContent =
-        "FIN DEL JUEGO 💔";
-
-    menu.querySelector("p").innerHTML =
-        "Puntaje final: <b>" +
-        score +
-        "</b><br><br>" +
-        "Pero recuerda... ❤️";
 
     startButton.textContent =
-        "🚀 JUGAR DE NUEVO";
+        "JUEGA DE NUEVO AMOR 😍";
+
+
+    pauseScreen.style.display =
+        "none";
 
 }
-
-
-/* =====================================================
-   ACTUALIZAR JUEGO
-   ===================================================== */
-
-function update(delta){
-
-    if(!playing || paused){
-        return;
-    }
-
-
-    /* =================================================
-       JUGADOR
-       ================================================= */
-
-    if(movingLeft){
-
-        player.x -=
-            player.speed * delta;
-
-    }
-
-
-    if(movingRight){
-
-        player.x +=
-            player.speed * delta;
-
-    }
-
-
-    player.x =
-        Math.max(
-            30,
-            Math.min(
-                W - 30,
-                player.x
-            )
-        );
-
-
-    player.cooldown =
-        Math.max(
-            0,
-            player.cooldown - delta
-        );
-
-
-    /* =================================================
-       ESTRELLAS
-       ================================================= */
-
-    for(const star of stars){
-
-        star.y +=
-            star.speed * delta;
-
-
-        if(star.y > H){
-
-            star.y = 0;
-
-            star.x =
-                Math.random() * W;
-
-        }
-
-    }
-
-
-    /* =================================================
-       BALAS
-       ================================================= */
-
-    for(const bullet of bullets){
-
-        bullet.y -=
-            bullet.speed * delta;
-
-    }
-
-
-    bullets =
-        bullets.filter(
-            bullet =>
-                bullet.y > -40
-        );
-
-
-    /* =================================================
-       JEFE 👑
-       ================================================= */
-
-    if(bossActive && boss){
-
-        boss.x +=
-            boss.direction *
-            boss.speed *
-            delta;
-
-
-        if(
-            boss.x + boss.width / 2 >= W - 20 ||
-            boss.x - boss.width / 2 <= 20
-        ){
-
-            boss.direction *= -1;
-
-        }
-
-    }
-
-
-    /* =================================================
-       ALIENS
-       ================================================= */
-
-    const speed =
-        45 +
-        score * .15;
-
-
-    let changeDirection = false;
-
-
-    /*
-       Si hay jefe, los aliens normales
-       dejan de moverse para que el jefe
-       sea el protagonista.
-    */
-
-    if(!bossActive){
-
-        for(const alien of aliens){
-
-            if(
-                alien.x + alien.width / 2 >= W - 20 ||
-                alien.x - alien.width / 2 <= 20
-            ){
-
-                changeDirection = true;
-
-            }
-
-        }
-
-
-        if(changeDirection){
-
-            for(const alien of aliens){
-
-                alien.direction *= -1;
-
-                alien.y += 22;
-
-            }
-
-        }
-
-
-        for(const alien of aliens){
-
-            alien.x +=
-                alien.direction *
-                speed *
-                delta;
-
-        }
-
-    }
-
-
-    /* =================================================
-       COLISIONES BALAS / ALIENS
-       ================================================= */
-
-    for(
-        let b = bullets.length - 1;
-        b >= 0;
-        b--
-    ){
-
-        const bullet =
-            bullets[b];
-
-
-        for(
-            let a = aliens.length - 1;
-            a >= 0;
-            a--
-        ){
-
-            const alien =
-                aliens[a];
-
-
-            const collision =
-
-                Math.abs(
-                    bullet.x - alien.x
-                )
-                <
-                alien.width * .55
-
-                &&
-
-                Math.abs(
-                    bullet.y - alien.y
-                )
-                <
-                alien.height * .65;
-
-
-            if(collision){
-
-                bullets.splice(
-                    b,
-                    1
-                );
-
-
-                aliens.splice(
-                    a,
-                    1
-                );
-
-
-                score += 10;
-
-
-                scoreElement.textContent =
-                    score;
-
-
-                explosion(
-                    alien.x,
-                    alien.y
-                );
-
-
-                /*
-                   FRASE DIFERENTE/ALEATORIA ❤️
-                */
-
-                showLove();
-
-
-                break;
-
-            }
-
-        }
-
-    }
-
-
-    /* =================================================
-       BALAS CONTRA JEFE 👑
-       ================================================= */
-
-    if(bossActive && boss){
-
-        for(
-            let b = bullets.length - 1;
-            b >= 0;
-            b--
-        ){
-
-            const bullet =
-                bullets[b];
-
-
-            const hit =
-
-                Math.abs(
-                    bullet.x - boss.x
-                )
-                <
-                boss.width * .55
-
-                &&
-
-                Math.abs(
-                    bullet.y - boss.y
-                )
-                <
-                boss.height * .55;
-
-
-            if(hit){
-
-                bullets.splice(
-                    b,
-                    1
-                );
-
-
-                boss.health--;
-
-
-                explosion(
-                    bullet.x,
-                    bullet.y
-                );
-
-
-                /*
-                   JEFE DERROTADO
-                */
-
-                if(boss.health <= 0){
-
-                    explosion(
-                        boss.x,
-                        boss.y
-                    );
-
-
-                    explosion(
-                        boss.x - 35,
-                        boss.y
-                    );
-
-
-                    explosion(
-                        boss.x + 35,
-                        boss.y
-                    );
-
-
-                    explosion(
-                        boss.x,
-                        boss.y - 30
-                    );
-
-
-                    /*
-                       BONUS DEL JEFE
-                    */
-
-                    score += 100;
-
-
-                    scoreElement.textContent =
-                        score;
-
-
-                    boss = null;
-
-                    bossActive = false;
-
-
-                    /*
-                       MENSAJE ESPECIAL ❤️
-                    */
-
-                    showBossLove();
-
-
-                    /*
-                       Después de un momento
-                       desaparecen los aliens
-                       anteriores y comienza
-                       otra ronda.
-                    */
-
-                    setTimeout(
-                        function(){
-
-                            if(
-                                playing &&
-                                !bossActive
-                            ){
-
-                                createAliens();
-
-                            }
-
-                        },
-                        1200
-                    );
-
-                }
-
-            }
-
-        }
-
-    }
-
-
-    /* =================================================
-       ALIENS LLEGAN AL JUGADOR
-       ================================================= */
-
-    if(!bossActive){
-
-        for(const alien of aliens){
-
-            if(
-                alien.y >
-                player.y - 20
-            ){
-
-                gameOver();
-
-                return;
-
-            }
-
-        }
-
-    }
-
-
-    /* =================================================
-       NIVEL TERMINADO
-       ================================================= */
-
-    if(
-        aliens.length === 0 &&
-        !levelStarting &&
-        !bossActive
-    ){
-
-        levelStarting = true;
-
-
-        /*
-           Cada ronda da 100 puntos.
-        */
-
-        score += 100;
-
-
-        scoreElement.textContent =
-            score;
-
-
-        /*
-           CADA 100 PUNTOS APARECE JEFE 👑
-        */
-
-        if(
-            score % 1000 === 0
-        ){
-
-            createBoss();
-
-        }
-        else{
-
-            setTimeout(
-                function(){
-
-                    if(
-                        playing &&
-                        !bossActive
-                    ){
-
-                        createAliens();
-
-                        levelStarting =
-                            false;
-
-                    }
-
-                },
-                700
-            );
-
-        }
-
-    }
-
-
-    /* =================================================
-       PARTÍCULAS
-       ================================================= */
-
-    for(const particle of particles){
-
-        particle.x +=
-            particle.vx * delta;
-
-
-        particle.y +=
-            particle.vy * delta;
-
-
-        particle.vy +=
-            200 * delta;
-
-
-        particle.life -=
-            delta;
-
-    }
-
-
-    particles =
-        particles.filter(
-            particle =>
-                particle.life > 0
-        );
-
-}
-
-
-/* =====================================================
-   DIBUJAR NAVE 🚀
+      /* =====================================================
+   DIBUJAR JUGADOR
    ===================================================== */
 
 function drawPlayer(){
 
-    if(!player){
-        return;
+    if(!player) return;
+
+
+    if(player.invulnerable > 0){
+
+        if(
+            Math.floor(
+                player.invulnerable * 10
+            ) % 2 === 0
+        ){
+
+            return;
+
+        }
+
     }
 
 
     ctx.save();
 
+    ctx.fillStyle = "#00ffff";
 
-    ctx.translate(
+    ctx.beginPath();
+
+    ctx.moveTo(
         player.x,
-        player.y
-    );
-
-
-    /* FUEGO */
-
-    ctx.fillStyle =
-        "#ff7b35";
-
-    ctx.shadowColor =
-        "#ff5722";
-
-    ctx.shadowBlur =
-        15;
-
-
-    ctx.beginPath();
-
-    ctx.moveTo(
-        -8,
-        15
+        player.y - player.height / 2
     );
 
     ctx.lineTo(
-        0,
-        30
+        player.x - player.width / 2,
+        player.y + player.height / 2
     );
 
     ctx.lineTo(
-        8,
-        15
+        player.x + player.width / 2,
+        player.y + player.height / 2
     );
 
     ctx.closePath();
 
     ctx.fill();
-
-
-    /* NAVE */
-
-    ctx.fillStyle =
-        "#8eeaff";
-
-    ctx.shadowColor =
-        "#33dfff";
-
-    ctx.shadowBlur =
-        15;
-
-
-    ctx.beginPath();
-
-    ctx.moveTo(
-        0,
-        -25
-    );
-
-    ctx.lineTo(
-        27,
-        20
-    );
-
-    ctx.lineTo(
-        9,
-        14
-    );
-
-    ctx.lineTo(
-        0,
-        21
-    );
-
-    ctx.lineTo(
-        -9,
-        14
-    );
-
-    ctx.lineTo(
-        -27,
-        20
-    );
-
-    ctx.closePath();
-
-    ctx.fill();
-
-
-    ctx.shadowBlur = 0;
-
-
-    /* VENTANA */
-
-    ctx.fillStyle =
-        "white";
-
-
-    ctx.beginPath();
-
-    ctx.arc(
-        0,
-        -8,
-        5,
-        0,
-        Math.PI * 2
-    );
-
-    ctx.fill();
-
 
     ctx.restore();
 
 }
-
-
-/* =====================================================
-   DIBUJAR ALIEN 👾
+      /* =====================================================
+   DIBUJAR ALIENS
    ===================================================== */
 
-function drawAlien(alien){
+function drawAliens(){
 
-    ctx.save();
+    aliens.forEach(alien => {
 
-
-    ctx.translate(
-        alien.x,
-        alien.y
-    );
+        if(!alien.alive) return;
 
 
-    const image =
-        alienImages[
-            alien.imageIndex
-        ];
+        ctx.save();
+
+        ctx.fillStyle = "#ff4d6d";
 
 
-    if(
-        image &&
-        image.complete &&
-        image.naturalWidth > 0
-    ){
+        ctx.beginPath();
 
-        const scale =
-            Math.min(
-                alien.width /
-                    image.naturalWidth,
-
-                alien.height /
-                    image.naturalHeight
-            );
-
-
-        const width =
-            image.naturalWidth *
-            scale;
-
-
-        const height =
-            image.naturalHeight *
-            scale;
-
-
-        ctx.drawImage(
-            image,
-
-            -width / 2,
-            -height / 2,
-
-            width,
-            height
+        ctx.arc(
+            alien.x,
+            alien.y,
+            alien.width / 2,
+            0,
+            Math.PI * 2
         );
 
-    }
-    else{
-
-        /* ALIEN POR DEFECTO */
-
-        ctx.fillStyle =
-            "#72ff7a";
-
-        ctx.shadowColor =
-            "#40ff55";
-
-        ctx.shadowBlur =
-            10;
+        ctx.fill();
 
 
-        ctx.fillRect(
-            -18,
-            -12,
-            36,
-            24
-        );
+        ctx.fillStyle = "#ffffff";
 
 
-        ctx.fillRect(
-            -25,
-            -5,
-            7,
-            13
-        );
+        ctx.beginPath();
 
-
-        ctx.fillRect(
-            18,
-            -5,
-            7,
-            13
-        );
-
-
-        ctx.shadowBlur = 0;
-
-
-        ctx.fillStyle =
-            "#07100a";
-
-
-        ctx.fillRect(
-            -10,
-            -6,
-            6,
-            6
-        );
-
-
-        ctx.fillRect(
+        ctx.arc(
+            alien.x - 8,
+            alien.y - 3,
             4,
-            -6,
-            6,
-            6
+            0,
+            Math.PI * 2
         );
 
-    }
+        ctx.arc(
+            alien.x + 8,
+            alien.y - 3,
+            4,
+            0,
+            Math.PI * 2
+        );
+
+        ctx.fill();
 
 
-    ctx.restore();
+        ctx.restore();
+
+    });
 
 }
-
-
-/* =====================================================
-   DIBUJAR JEFE 👑
+      /* =====================================================
+   DIBUJAR BALAS
    ===================================================== */
 
-function drawBoss(){
+function drawBullets(){
 
-    if(
-        !bossActive ||
-        !boss
-    ){
+    bullets.forEach(bullet => {
 
-        return;
+        ctx.save();
 
-    }
+        ctx.fillStyle = "#ffff00";
 
+        ctx.fillRect(
+            bullet.x - bullet.width / 2,
+            bullet.y - bullet.height / 2,
+            bullet.width,
+            bullet.height
+        );
 
-    ctx.save();
+        ctx.restore();
 
-
-    ctx.translate(
-        boss.x,
-        boss.y
-    );
-
-
-    /* AURA */
-
-    ctx.shadowColor =
-        "#ff174f";
-
-    ctx.shadowBlur =
-        30;
-
-
-    /* CUERPO DEL JEFE */
-
-    ctx.fillStyle =
-        "#ff315f";
-
-
-    ctx.beginPath();
-
-    ctx.moveTo(
-        0,
-        -40
-    );
-
-    ctx.lineTo(
-        55,
-        -15
-    );
-
-    ctx.lineTo(
-        45,
-        35
-    );
-
-    ctx.lineTo(
-        20,
-        45
-    );
-
-    ctx.lineTo(
-        0,
-        30
-    );
-
-    ctx.lineTo(
-        -20,
-        45
-    );
-
-    ctx.lineTo(
-        -45,
-        35
-    );
-
-    ctx.lineTo(
-        -55,
-        -15
-    );
-
-    ctx.closePath();
-
-    ctx.fill();
-
-
-    ctx.shadowBlur = 0;
-
-
-    /* OJOS */
-
-    ctx.fillStyle =
-        "white";
-
-
-    ctx.fillRect(
-        -27,
-        -10,
-        15,
-        15
-    );
-
-
-    ctx.fillRect(
-        12,
-        -10,
-        15,
-        15
-    );
-
-
-    /* CORAZÓN */
-
-    ctx.font =
-        "35px Arial";
-
-    ctx.textAlign =
-        "center";
-
-    ctx.textBaseline =
-        "middle";
-
-
-    ctx.fillText(
-        "❤️",
-        0,
-        12
-    );
-
-
-    ctx.restore();
-
-
-    /* =================================================
-       BARRA DE VIDA
-       ================================================= */
-
-    const barWidth = 140;
-
-    const barHeight = 11;
-
-
-    const healthPercent =
-        boss.health /
-        boss.maxHealth;
-
-
-    /* FONDO */
-
-    ctx.fillStyle =
-        "#33000d";
-
-
-    ctx.fillRect(
-        boss.x - barWidth / 2,
-        boss.y - 58,
-        barWidth,
-        barHeight
-    );
-
-
-    /* VIDA */
-
-    ctx.fillStyle =
-        "#ff315f";
-
-
-    ctx.fillRect(
-        boss.x - barWidth / 2,
-        boss.y - 58,
-        barWidth * healthPercent,
-        barHeight
-    );
-
-
-    /* BORDE */
-
-    ctx.strokeStyle =
-        "white";
-
-
-    ctx.strokeRect(
-        boss.x - barWidth / 2,
-        boss.y - 58,
-        barWidth,
-        barHeight
-    );
-
-
-    /* TEXTO */
-
-    ctx.fillStyle =
-        "white";
-
-    ctx.font =
-        "bold 14px Arial";
-
-    ctx.textAlign =
-        "center";
-
-
-    ctx.fillText(
-        "👑 JEFE",
-        boss.x,
-        boss.y - 68
-    );
+    });
 
 }
-
-
-/* =====================================================
+      /* =====================================================
    DIBUJAR TODO
    ===================================================== */
 
@@ -2320,183 +2068,682 @@ function draw(){
     );
 
 
-    /* =================================================
-       ESTRELLAS
-       ================================================= */
-
-    for(const star of stars){
-
-        ctx.globalAlpha =
-            .4;
-
-        ctx.fillStyle =
-            "white";
-
-
-        ctx.fillRect(
-            star.x,
-            star.y,
-            star.size,
-            star.size
-        );
-
-    }
-
-
-    ctx.globalAlpha = 1;
-
-
-    if(!player){
-
-        return;
-
-    }
-
-
-    /* =================================================
-       NAVE
-       ================================================= */
-
     drawPlayer();
 
+    drawAliens();
 
-    /* =================================================
-       ALIENS
-       ================================================= */
+    drawBullets();
 
-    for(const alien of aliens){
+}
+      /* =====================================================
+   BUCLE PRINCIPAL
+   ===================================================== */
 
-        drawAlien(alien);
-
-    }
-
-
-    /* =================================================
-       JEFE
-       ================================================= */
-
-    drawBoss();
+let lastTime = performance.now();
 
 
-    /* =================================================
-       BALAS
-       ================================================= */
+function gameLoop(time){
 
-    ctx.fillStyle =
-        "#fff16a";
+    const dt = Math.min(
+        (time - lastTime) / 1000,
+        0.05
+    );
 
-    ctx.shadowColor =
-        "#fff16a";
-
-    ctx.shadowBlur =
-        12;
+    lastTime = time;
 
 
-    for(const bullet of bullets){
+    if(playing && !paused){
 
-        ctx.fillRect(
+        update(dt);
 
-            bullet.x -
-            bullet.width / 2,
-
-            bullet.y,
-
-            bullet.width,
-
-            bullet.height
-
-        );
+        draw();
 
     }
 
 
-    ctx.shadowBlur = 0;
+    requestAnimationFrame(gameLoop);
+
+}
 
 
-    /* =================================================
-       EXPLOSIONES
-       ================================================= */
+requestAnimationFrame(gameLoop);
+      /* =====================================================
+   BOTÓN PAUSA
+   ===================================================== */
 
-    for(const particle of particles){
+pauseButton.addEventListener(
+    "click",
+    function(){
 
-        ctx.globalAlpha =
-            Math.max(
-                0,
-                particle.life
-            );
-
-
-        ctx.fillStyle =
-            "#ff5b8a";
+        if(!playing) return;
 
 
-        ctx.fillRect(
-            particle.x,
-            particle.y,
-            5,
-            5
-        );
+        paused = !paused;
+
+
+        if(paused){
+
+            pauseButton.textContent =
+                "Continuar";
+
+            pauseScreen.style.display =
+                "flex";
+
+        }else{
+
+            pauseButton.textContent =
+                "Pausa";
+
+            pauseScreen.style.display =
+                "none";
+
+            lastTime =
+                performance.now();
+
+        }
 
     }
+);
+      /* =====================================================
+   BLOQUE 17 — MENSAJE ESPECIAL
+   ===================================================== */
 
+function mostrarMensaje(){
 
-    ctx.globalAlpha = 1;
+    const mensaje = document.getElementById("mensajeEspecial");
+
+    if(!mensaje) return;
+
+    mensaje.style.display =
+        mensaje.style.display === "none"
+        ? "block"
+        : "none";
 
 }
 
 
 /* =====================================================
-   BUCLE PRINCIPAL
+   BLOQUE 18 — BOTÓN DE MENSAJE
    ===================================================== */
 
-function gameLoop(time){
+const mensajeButton =
+    document.getElementById("mensajeButton");
 
-    if(!lastTime){
+if(mensajeButton){
 
-        lastTime = time;
-
-    }
-
-
-    let delta =
-        (time - lastTime) / 1000;
-
-
-    lastTime =
-        time;
-
-
-    delta =
-        Math.min(
-            delta,
-            .033
-        );
-
-
-    update(delta);
-
-    draw();
-
-
-    requestAnimationFrame(
-        gameLoop
+    mensajeButton.addEventListener(
+        "click",
+        mostrarMensaje
     );
 
 }
 
 
-requestAnimationFrame(
-    gameLoop
-);
+/* =====================================================
+   BLOQUE 19 — REDIMENSIONAR CANVAS
+   ===================================================== */
 
-</script>
- <audio autoplay loop> 
-       <source src="AUD-20260316-WA0060.mp3"> 
-      </audio>  
+function resizeCanvas(){
 
-</body>
+    W = canvas.width =
+        canvas.clientWidth;
 
-</html>
+    H = canvas.height =
+        canvas.clientHeight;
 
+
+    if(player){
+
+        player.y = H - 110;
+
+    }
 
 }
+
+
+window.addEventListener(
+    "resize",
+    resizeCanvas
+);
+
+resizeCanvas();
+
+
+/* =====================================================
+   BLOQUE 20 — INICIAR AL PULSAR EL BOTÓN
+   ===================================================== */
+
+startButton.addEventListener(
+    "click",
+    function(){
+
+        startGame();
+
+    }
+);
+      /* =====================================================
+   BLOQUE 21 — MÚSICA
+   ===================================================== */
+
+function iniciarMusica(){
+
+    if(!music) return;
+
+    music.currentTime = 0;
+
+    music.volume = 0.7;
+
+    music.play().catch(function(){
+
+        console.log("El navegador bloqueó el audio.");
+
+    });
+
+}
+
+
+/* =====================================================
+   BLOQUE 22 — BOTÓN DE MÚSICA
+   ===================================================== */
+
+const musicButton =
+    document.getElementById("musicButton");
+
+if(musicButton){
+
+    musicButton.addEventListener(
+        "click",
+        function(){
+
+            if(!music) return;
+
+
+            if(music.paused){
+
+                music.play().catch(function(){});
+
+                musicButton.textContent =
+                    "🔊 PAUSAR MÚSICA";
+
+            }else{
+
+                music.pause();
+
+                musicButton.textContent =
+                    "🎵 REPRODUCIR MÚSICA";
+
+            }
+
+        }
+    );
+
+}
+
+
+/* =====================================================
+   BLOQUE 23 — MENSAJE PARA TI
+   ===================================================== */
+
+function mostrarMensajeAmor(){
+
+    const mensaje =
+        document.getElementById("mensajeEspecial");
+
+    if(!mensaje) return;
+
+
+    if(
+        mensaje.style.display === "none" ||
+        mensaje.style.display === ""
+    ){
+
+        mensaje.style.display = "block";
+
+    }else{
+
+        mensaje.style.display = "none";
+
+    }
+
+}
+
+
+/* =====================================================
+   BLOQUE 24 — BOTÓN 💌 MENSAJE PARA TI
+   ===================================================== */
+
+const mensajeEspecialButton =
+    document.getElementById("mensajeEspecialButton");
+
+if(mensajeEspecialButton){
+
+    mensajeEspecialButton.addEventListener(
+        "click",
+        function(){
+
+            mostrarMensajeAmor();
+
+        }
+    );
+
+}
+      /* =====================================================
+   BLOQUE 25 — COMPROBAR SI GANASTE LA RONDA
+   ===================================================== */
+
+function checkWin(){
+
+    if(!playing) return;
+
+    const remaining =
+        aliens.filter(
+            alien => alien.alive
+        ).length;
+
+
+    if(remaining === 0){
+
+        score += 100;
+
+        scoreElement.textContent = score;
+
+
+        love.textContent =
+            "💖 ¡LO LOGRASTE! 💖";
+
+
+        createAliens();
+
+
+        alienSpeed += 10;
+
+    }
+
+}
+
+
+/* =====================================================
+   BLOQUE 26 — REINICIAR EL JUEGO
+   ===================================================== */
+
+function restartGame(){
+
+    if(music){
+
+        music.pause();
+
+        music.currentTime = 0;
+
+    }
+
+
+    lives = 3;
+
+    score = 0;
+
+
+    scoreElement.textContent =
+        score;
+
+    livesElement.textContent =
+        lives;
+
+
+    bullets = [];
+
+    particles = [];
+
+
+    startGame();
+
+}
+
+
+/* =====================================================
+   BLOQUE 27 — BOTÓN DE REINICIO
+   ===================================================== */
+
+if(startButton){
+
+    startButton.addEventListener(
+        "click",
+        function(){
+
+            if(!playing){
+
+                restartGame();
+
+            }
+
+        }
+    );
+
+}
+
+
+/* =====================================================
+   BLOQUE 28 — DIBUJO INICIAL
+   ===================================================== */
+
+function drawInitialScreen(){
+
+    ctx.clearRect(
+        0,
+        0,
+        W,
+        H
+    );
+
+
+    ctx.save();
+
+
+    ctx.fillStyle =
+        "rgba(0,0,0,0.25)";
+
+
+    ctx.fillRect(
+        0,
+        0,
+        W,
+        H
+    );
+
+
+    ctx.fillStyle =
+        "#ffffff";
+
+
+    ctx.font =
+        "bold 24px Arial";
+
+
+    ctx.textAlign =
+        "center";
+
+
+    ctx.fillText(
+        "💖 TE AMO 💖",
+        W / 2,
+        H / 2
+    );
+
+
+    ctx.restore();
+
+}
+
+
+drawInitialScreen();
+
+/* =====================================================
+   BLOQUE 29 — ACTUALIZAR PARTÍCULAS
+   ===================================================== */
+
+function updateParticles(dt){
+
+    particles.forEach(p => {
+
+        p.x += p.vx * dt;
+
+        p.y += p.vy * dt;
+
+        p.life -= dt;
+
+    });
+
+
+    particles = particles.filter(
+        p => p.life > 0
+    );
+
+}
+
+
+/* =====================================================
+   BLOQUE 30 — CREAR EXPLOSIÓN
+   ===================================================== */
+
+function createExplosion(x, y){
+
+    for(let i = 0; i < 12; i++){
+
+        particles.push({
+
+            x: x,
+
+            y: y,
+
+            vx:
+                (Math.random() - 0.5) * 220,
+
+            vy:
+                (Math.random() - 0.5) * 220,
+
+            life: 0.5
+
+        });
+
+    }
+
+}
+
+
+/* =====================================================
+   BLOQUE 31 — DIBUJAR PARTÍCULAS
+   ===================================================== */
+
+function drawParticles(){
+
+    particles.forEach(p => {
+
+        ctx.save();
+
+        ctx.globalAlpha =
+            Math.max(0, p.life * 2);
+
+        ctx.fillStyle =
+            "#ff4d6d";
+
+        ctx.beginPath();
+
+        ctx.arc(
+            p.x,
+            p.y,
+            3,
+            0,
+            Math.PI * 2
+        );
+
+        ctx.fill();
+
+        ctx.restore();
+
+    });
+
+}
+
+
+/* =====================================================
+   BLOQUE 32 — ACTUALIZACIÓN FINAL DE PARTÍCULAS
+   ===================================================== */
+
+const oldUpdate = update;
+
+update = function(dt){
+
+    oldUpdate(dt);
+
+    if(!playing || paused) return;
+
+    updateParticles(dt);
+
+};
+      /* =====================================================
+   BLOQUE 33 — EXPLOSIÓN AL DESTRUIR ALIEN
+   ===================================================== */
+
+const oldCheckBulletCollisions =
+    checkBulletCollisions;
+
+checkBulletCollisions = function(){
+
+    for(let i = bullets.length - 1; i >= 0; i--){
+
+        const bullet = bullets[i];
+
+        for(let j = aliens.length - 1; j >= 0; j--){
+
+            const alien = aliens[j];
+
+            if(!alien.alive) continue;
+
+
+            const hit =
+                bullet.x - bullet.width / 2 <
+                alien.x + alien.width / 2 &&
+
+                bullet.x + bullet.width / 2 >
+                alien.x - alien.width / 2 &&
+
+                bullet.y - bullet.height / 2 <
+                alien.y + alien.height / 2 &&
+
+                bullet.y + bullet.height / 2 >
+                alien.y - alien.height / 2;
+
+
+            if(hit){
+
+                createExplosion(
+                    alien.x,
+                    alien.y
+                );
+
+                break;
+
+            }
+
+        }
+
+    }
+
+
+    oldCheckBulletCollisions();
+
+};
+
+
+/* =====================================================
+   BLOQUE 34 — COMPROBAR VICTORIA
+   ===================================================== */
+
+const oldUpdateWithWin = update;
+
+update = function(dt){
+
+    oldUpdateWithWin(dt);
+
+    if(!playing || paused) return;
+
+    checkWin();
+
+};
+
+
+/* =====================================================
+   BLOQUE 35 — DIBUJAR PARTÍCULAS
+   ===================================================== */
+
+const oldDraw = draw;
+
+draw = function(){
+
+    oldDraw();
+
+    drawParticles();
+
+};
+
+
+/* =====================================================
+   BLOQUE 36 — LIMPIAR MOVIMIENTO AL SALIR
+   ===================================================== */
+
+window.addEventListener(
+    "blur",
+    function(){
+
+        movingLeft = false;
+
+        movingRight = false;
+
+    }
+);
+      /* =====================================================
+   BLOQUE 37 — REINICIO CORRECTO DEL TIEMPO
+   ===================================================== */
+
+document.addEventListener("visibilitychange", function(){
+
+    lastTime = performance.now();
+
+});
+
+
+/* =====================================================
+   BLOQUE 38 — EVITAR QUE EL BOTÓN DISPARAR MUEVA LA PÁGINA
+   ===================================================== */
+
+if(fireButton){
+
+    fireButton.addEventListener(
+        "touchstart",
+        function(e){
+
+            e.preventDefault();
+
+            shoot();
+
+        },
+        { passive: false }
+    );
+
+}
+
+
+/* =====================================================
+   BLOQUE 39 — MENSAJE ROMÁNTICO
+   ===================================================== */
+
+if(love){
+
+    love.textContent =
+        "TE AMO ❤️ ERES LA MEJOR 😘 MIL BESOS 💋";
+
+}
+
+
+/* =====================================================
+   BLOQUE 40 — LIMPIEZA FINAL
+   ===================================================== */
+
+window.addEventListener("contextmenu", function(e){
+
+    if(
+        e.target === fireButton ||
+        e.target === leftButton ||
+        e.target === rightButton
+    ){
+
+        e.preventDefault();
+
+    }
+
+});
+
+
+console.log(
+    "💖 Juego listo para ti mi amooor 😍😍"
+);
+      
